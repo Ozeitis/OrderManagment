@@ -1,17 +1,52 @@
 package edu.yu.cs.intro.orderManagement;
-/**
- * An implementation of item which represents a Service provided by the business.
- * Has a price per billable hour as well a number of hours this service takes.
- * The price returned by getPrice must be the per hour price multiplied by the number of hours the
-service takes
- */
+
+private double pricePerHour;
+private int numberOfHours;
+private int serviceID;
+private String description;
+
 public class Service implements Item {
-public Service(double pricePerHour, int numberOfHours, int serviceID, String description){}
-/**
-* @return the number of house this service takes */
-public int getNumberOfHours(){} @Override
-public int getItemNumber() {} @Override
-public String getDescription() {} @Override
-public double getPrice() {} @Override
-public boolean equals(Object o) {} @Override
-public int hashCode() {} }
+
+	public Service(double pricePerHour, int numberOfHours, int serviceID, String description){
+		this.pricePerHour == pricePerHour;
+		this.numberOfHours == numberOfHours;
+		this.serviceID == serviceID;
+		this.description == description;
+	}
+
+	@Override
+	public int getNumberOfHours(){
+		return this.numberOfHours;
+	} 
+
+	@Override
+	public int getItemNumber() {
+		return this.serviceID;
+	} 
+
+	@Override
+	public String getDescription() {
+		return this.description;
+	} 
+
+	@Override
+	public double getPrice() {
+		return this.pricePerHour;
+	} 
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) return true;
+	    if (!(o instanceof Service) || o == null) {
+	        return false;
+	    }
+	    Service serv = (Service) o;
+	    return serv.getPrice() == this.pricePerHour && serv.getNumberOfHours() == this.numberOfHours && serv.getItemNumber() == this.serviceID && serv.getDescription().equals(this.description);
+	} 
+
+	@Override //This needs to be checked, I'm not confident
+	public int hashCode() {
+		return Objects.hash(this.pricePerHour, this.numberOfHours, this.serviceID, this.description);
+	}
+
+}
