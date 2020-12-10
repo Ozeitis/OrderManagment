@@ -1,73 +1,73 @@
 package edu.yu.cs.intro.orderManagement;
+import java.util.Set;
+import java.util.HashSet;
+public class ServiceProvider{
+	private String name;
+	private int id;
+	private Set<Service> services;
+	private boolean busy == false;
+	//this is to mark whether the service provider is busy or not. it is modified by other methods.
+	public ServiceProvider(String name, int id, Set<Service> services){
+this.name=name;
+this.id=id;
+this.services = new HashSet<>;
+this.services.addAll(services);
+}
+public String getName(){
+	return this.name;
+}
+public int getId(){
+	return this.id;
+}
+protected void assignToCustomer(){
+	if(this.busy==true){
+		throw IllegalStateException;
+	}else{
+this.busy==true;
+	}
 
-/**
- * 1) has a Set of services that he can provide Version / Date: 1.1 / December
- * 10, 2020 Demo Program 8 2) can only work on one order at a time - once
- * assigned to a customer, can not take another assignment until 3 other orders
- * have been placed with the order management system 3) is uniquely identified
- * by its ID
- */
-public class ServiceProvider {
-    /**
-     *
-     * @param name
-     * @param id       unique id of the ServiceProvider
-     * @param services set of services this provider can provide
-     */
-    public ServiceProvider(String name, int id, Set<Service> services) {
-    }
+}
+protected void endCustomerEngagement(){
+	if(this.busy==false){
+		throw IllegalStateException;
+	}else{
+		this.busy==false;
+	}
+}
+protected boolean addService(Service s){
+	return this.services.add(s);
+}
+protected boolean removeService(Service s){
+	return this.services.remove(s);
+}
+public Set<Service> getServices(){
+	Set<Service> copy = new Set<>;
+	copy.addAll(this.services);
+	return copy;
+}
+@Override
+public boolean equals(Object o){
+	if(this=o){
+		return true;
+	}
+	if( o== null){
+		return false;
+	}
+	if(getClass() !=o.getClass()){
+		return false;
+	}
+	if(this.getId = o.getId){
+		return true;
+	}
+	else return false;
+	
+	
+}
+@Override
+public int hashCode(){
+	int cipher = this.id * 54;
+	for(int a = 0; a <)
+return 
+}
 
-    public String getName() {
-    }
-
-    public int getId() {
-    }
-
-    /**
-     * Assign this provider to a customer. Record the fact that he is busy.
-     * 
-     * @throws IllegalStateException if the provider is currently assigned to a job
-     */
-    protected void assignToCustomer() {
-    }
-
-    /**
-     * Free this provider up - is not longer assigned to a customer
-     * 
-     * @throws IllegalStateException if the provider is NOT currently assigned to a
-     *                               job
-     */
-    protected void endCustomerEngagement() {
-    }
-
-    /**
-     * @param s add the given service to the set of services this provider can
-     *          provide * @return true if it was added, false if not
-     */
-    protected boolean addService(Service s) {
-    }
-
-    /**
-     * @param s remove the given service to the set of services this provider can
-     *          provide * @return true if it was removed, false if not
-     */
-    protected boolean removeService(Service s) {
-    }
-
-    /**
-     * *
-     * 
-     * @return a COPY of the set of services. MUST NOT return the Set instance
-     *         itself, since that would allow a caller to then add/remove services
-     */
-    public Set<Service> getServices() {
-    }
-
-    @Override
-    public boolean equals(Object o) {
-    }
-
-    @Override
-    public int hashCode() {
-    }
 }
