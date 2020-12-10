@@ -1,11 +1,9 @@
 package edu.yu.cs.intro.orderManagement;
-
-private double pricePerHour;
-private int numberOfHours;
-private int serviceID;
-private String description;
-
 public class Service implements Item {
+    private double pricePerHour;
+    private int numberOfHours;
+    private int serviceID;
+    private String description;
 
 	public Service(double pricePerHour, int numberOfHours, int serviceID, String description){
 		this.pricePerHour == pricePerHour;
@@ -14,7 +12,7 @@ public class Service implements Item {
 		this.description == description;
 	}
 
-	@Override
+    @Override
 	public int getNumberOfHours(){
 		return this.numberOfHours;
 	} 
