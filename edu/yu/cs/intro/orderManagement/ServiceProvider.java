@@ -5,7 +5,7 @@ public class ServiceProvider{
 	private String name;
 	private int id;
 	private Set<Service> services;
-	private boolean busy == false;
+	private boolean busy = false;
 	//this is to mark whether the service provider is busy or not. it is modified by other methods.
 	public ServiceProvider(String name, int id, Set<Service> services){
 this.name=name;
@@ -23,7 +23,7 @@ protected void assignToCustomer(){
 	if(this.busy==true){
 		throw IllegalStateException;
 	}else{
-this.busy==true;
+		this.busy=true;
 	}
 
 }
@@ -31,7 +31,7 @@ protected void endCustomerEngagement(){
 	if(this.busy==false){
 		throw IllegalStateException;
 	}else{
-		this.busy==false;
+		this.busy=false;
 	}
 }
 protected boolean addService(Service s){
