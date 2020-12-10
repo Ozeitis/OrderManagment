@@ -31,18 +31,18 @@ public class Product implements Item {
   
   @Override
   public boolean equals(Object o) {
-    if (o == this){
-      return true;
-    }
-    if (!(o instanceof Product) || o == null) { //should be instance of Item?
+    if (o == this) return true;
+    if (!(o instanceof Product)) { //should be instance of Item?
         return false;
     }
     Product product = (Product) o;
-      return product.name.equals(this.name) && product.price == this.price && product.productID.equals(this.productID);
+      return product.name.equals(name) &&
+      product.price == price &&
+      product.productID.equals(productID);
 }
   
   @Override
   public int hashCode() {
-    return Objects.hash(this.name, this.price, this.productID);
+    return Objects.hash(name, price, productID);
     }
 }
