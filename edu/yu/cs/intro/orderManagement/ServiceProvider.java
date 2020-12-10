@@ -12,7 +12,7 @@ public class ServiceProvider{
 	public ServiceProvider(String name, int id, Set<Service> services){
 		this.name=name;
 		this.id=id;
-		this.services = new HashSet<>;
+		this.services = new HashSet<>();
 		this.services.addAll(services);
 	}
 	
