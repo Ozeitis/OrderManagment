@@ -42,7 +42,7 @@ public class Service implements Item {
 	    return serv.getPrice() == this.pricePerHour && serv.getNumberOfHours() == this.numberOfHours && serv.getItemNumber() == this.serviceID && serv.getDescription().equals(this.description);
 	} 
 
-	@Override //This needs to be checked, I'm not confident
+	@Override //This needs to be checked, I'm not confident.
 	public int hashCode() {
 		return Objects.hash(this.pricePerHour, this.numberOfHours, this.serviceID, this.description);
 	}
