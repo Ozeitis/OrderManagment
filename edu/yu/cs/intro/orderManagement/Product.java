@@ -31,14 +31,14 @@ public class Product implements Item {
   
   @Override
   public boolean equals(Object o) {
-    if (o == this) return true;
+    if (o == this){
+      return true;
+    }
     if (!(o instanceof Product)) { //should be instance of Item?
         return false;
     }
     Product product = (Product) o;
-      return product.name.equals(name) &&
-      product.price == price &&
-      product.productID.equals(productID);
+      return product.name.equals(name) && product.price == price && product.productID.equals(productID);
 }
   
   @Override
