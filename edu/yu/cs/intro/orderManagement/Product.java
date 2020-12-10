@@ -38,11 +38,11 @@ public class Product implements Item {
         return false;
     }
     Product product = (Product) o;
-      return product.name.equals(name) && product.price == price && product.productID.equals(productID);
+      return product.name.equals(this.name) && product.price == this.price && product.productID.equals(this.productID);
 }
   
   @Override
   public int hashCode() {
-    return Objects.hash(name, price, productID);
+    return Objects.hash(this.name, this.price, this.productID);
     }
 }
