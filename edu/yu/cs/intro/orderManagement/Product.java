@@ -21,7 +21,7 @@ public class Product implements Item {
   
   @Override
   public String getDescription() { 
-    return this.name; // ASSUMING THIS IS CORRECT OM PIAZZA THEY DID NOT CONFIRM
+    return this.name; // ASSUMING THIS IS CORRECT OM PIAZZA THEY DID NOT CONFIRM.
   }
 
   @Override
