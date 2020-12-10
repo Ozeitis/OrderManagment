@@ -34,7 +34,7 @@ public class Product implements Item {
     if (o == this){
       return true;
     }
-    if (!(o instanceof Product)) { //should be instance of Item?
+    if (!(o instanceof Product) || o == null) { //should be instance of Item?
         return false;
     }
     Product product = (Product) o;
