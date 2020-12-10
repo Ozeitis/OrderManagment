@@ -76,7 +76,7 @@ public class ServiceProvider {
 	@Override
 	public int hashCode(){
 		int cipher = this.id * 54;
-		for(int a = 0; a <)
+		for(int a = 0; a <) //What is this?
 	return 
 	}
 
