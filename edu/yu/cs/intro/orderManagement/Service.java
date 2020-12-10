@@ -6,10 +6,10 @@ public class Service implements Item {
     private String description;
 
 	public Service(double pricePerHour, int numberOfHours, int serviceID, String description){
-		this.pricePerHour == pricePerHour;
-		this.numberOfHours == numberOfHours;
-		this.serviceID == serviceID;
-		this.description == description;
+		this.pricePerHour = pricePerHour;
+		this.numberOfHours = numberOfHours;
+		this.serviceID = serviceID;
+		this.description = description;
 	}
 
     @Override
