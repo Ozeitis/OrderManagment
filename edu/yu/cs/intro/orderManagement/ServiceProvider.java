@@ -28,7 +28,7 @@ public class ServiceProvider {
 
 	protected void assignToCustomer() {
 		if (this.busy == true) {
-			throw IllegalStateException;
+			throw new IllegalStateException;
 		} else {
 			this.busy = true;
 		}
@@ -36,7 +36,7 @@ public class ServiceProvider {
 
 	protected void endCustomerEngagement() {
 		if (this.busy == false) {
-			throw IllegalStateException;
+			throw new IllegalStateException;
 		} else {
 			this.busy = false;
 		}
