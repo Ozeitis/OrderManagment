@@ -111,4 +111,6 @@ Version / Date: 1.1 / December 10, 2020
 
 6
 */
-protected void fulfill(int productNumber, int quantity){}
+protected void fulfill(int productNumber, int quantity){
+     }
+}
