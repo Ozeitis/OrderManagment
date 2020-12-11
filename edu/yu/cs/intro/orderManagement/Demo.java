@@ -1,13 +1,5 @@
 package edu.yu.cs.intro.orderManagement;
 
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-//java -ea edu.yu.cs.intro.orderManagement.Demo/////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -38,8 +30,9 @@ public class Demo {
         void runDemo() {
                 OrderManagementSystem system = new OrderManagementSystem(this.products, 5, this.providers,
                                 this.warehouse); // populate our system with products and services
-                                                 // this.createDemoProducts(); system.addNewProducts(this.products);
-                                                 // this.createDemoServiceProviders();
+                this.createDemoProducts();
+                system.addNewProducts(this.products);
+                this.createDemoServiceProviders();
                 for (ServiceProvider p : this.providers) {
                         system.addServiceProvider(p);
                 }
@@ -47,15 +40,15 @@ public class Demo {
                 Set<Product> catalog = system.getProductCatalog();
                 assert this.products.size() == catalog.size();
                 assert catalog.containsAll(this.products);
-                // make sure all the services are in the services offered Set<Service> services
-                // = system.getOfferedServices(); assert this.allServices.size() ==
-                // services.size(); assert services.containsAll(this.allServices);
+                // make sure all the services are in the services offered
+                Set<Service> services = system.getOfferedServices();
+                assert this.allServices.size() == services.size();
+                assert services.containsAll(this.allServices);
                 // create an order
                 Order order = new Order();
                 order.addToOrder(this.idToProduct.get(1), 3); // will use out of 5 of product #1
-                                                              // order.addToOrder(this.idToService.get(6),1); //will use
-                                                              // the only service provider for #6
-                                                              // system.placeOrder(order);
+                order.addToOrder(this.idToService.get(6), 1); // will use the only service provider for #6
+                system.placeOrder(order);
                 assert this.warehouse.getStockLevel(1) == 2;
                 assert order.isCompleted();
                 // place another order, should throw IllegalStateException
@@ -73,7 +66,8 @@ public class Demo {
                 // discontinued item
                 system.discontinueItem(this.idToProduct.get(1));
                 order = new Order();
-                order.addToOrder(this.idToProduct.get(1), 3); // only 2 left of product #1 caught = false;
+                order.addToOrder(this.idToProduct.get(1), 3); // only 2 left of product #1
+                caught = false;
                 try {
                         system.placeOrder(order);
                 } catch (IllegalArgumentException e) {
@@ -140,5 +134,13 @@ public class Demo {
                 }
                 this.providers.add(new ServiceProvider("p1", 1, srvcSetAll));
                 Set<Service> srvcSetThree = new HashSet<>();
+
+                srvcSetAll.add(s1);
+                srvcSetAll.add(s2);
+                srvcSetAll.add(s3);
+                this.providers.add(new ServiceProvider("p2", 2, srvcSetThree));
+                Set<Service> singleService = new HashSet<>();
+                srvcSetAll.add(s1);
+                this.providers.add(new ServiceProvider("p2", 3, singleService));
         }
 }
