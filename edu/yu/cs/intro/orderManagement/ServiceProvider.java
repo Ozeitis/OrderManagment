@@ -29,7 +29,7 @@ public class ServiceProvider {
 
 	protected void assignToCustomer() {
 		if (this.busy == true) {
-			throw new IllegalStateException;
+			throw new IllegalStateException();
 		} else {
 			this.busy = true;
 		}
@@ -37,7 +37,7 @@ public class ServiceProvider {
 
 	protected void endCustomerEngagement() {
 		if (this.busy == false) {
-			throw new IllegalStateException;
+			throw new IllegalStateException();
 		} else {
 			this.busy = false;
 		}
@@ -52,7 +52,7 @@ public class ServiceProvider {
 	}
 
 	public Set<Service> getServices() {
-		Set<Service> copy = new Set<>();
+		Set<Service> copy = new HashSet<>();
 		copy.addAll(this.services);
 		return copy;
 	}

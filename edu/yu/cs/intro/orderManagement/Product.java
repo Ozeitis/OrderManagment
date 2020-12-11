@@ -36,6 +36,9 @@ public class Product implements Item {
   public boolean equals(Object o) {
     if (o == this)
       return true;
+    if (o == null) {
+      return false;
+    }
     if (o instanceof Product) { // should be instance of Item?
       Product other = (Product) o;
       if (this.productID == other.getItemNumber()) {
