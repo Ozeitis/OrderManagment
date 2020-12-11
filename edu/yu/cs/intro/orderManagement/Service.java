@@ -14,7 +14,6 @@ public class Service implements Item {
 		this.description = description;
 	}
 
-    @Override
 	public int getNumberOfHours(){
 		return this.numberOfHours;
 	} 
