@@ -34,12 +34,14 @@ public class Service implements Item {
 
 	@Override
 	public boolean equals(Object o) {
-		if (o == this) return true;
-	    if (!(o instanceof Service) || o == null) {
-	        return false;
-	    }
-	    Service serv = (Service) o;
-	    return serv.getPrice() == this.pricePerHour && serv.getNumberOfHours() == this.numberOfHours && serv.getItemNumber() == this.serviceID && serv.getDescription().equals(this.description);
+		if (o == this){
+			return true;
+		}
+		if (!(o instanceof Service) || o == null) {
+	        	return false;
+	   	}
+		Service serv = (Service) o;
+		return serv.getPrice() == this.pricePerHour && serv.getNumberOfHours() == this.numberOfHours && serv.getItemNumber() == this.serviceID && serv.getDescription().equals(this.description);
 	} 
 
 	@Override //This needs to be checked, I'm not confident.
