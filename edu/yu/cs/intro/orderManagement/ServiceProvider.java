@@ -2,6 +2,7 @@ package edu.yu.cs.intro.orderManagement;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class ServiceProvider {
 	private String name;
@@ -58,26 +59,18 @@ public class ServiceProvider {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this = o) {
+		if (o == this) {
 			return true;
 		}
-		if (o == null) {
-			return false;
-		}
-		if (getClass() != o.getClass()) { // You can probably compine the tests which return false
-			return false;
-		}
-		if (this.getId = o.getId) {
+		ServiceProvider other = (ServiceProvider) o;
+		if (this.id == other.getId()) {
 			return true;
-		} else
-			return false; // you can just return this.getId = o.getId and cut down the lines of code
+		}
+		return false;
 	}
 
 	@Override
-	public int hashCode(){
-		int cipher = this.id * 54;
-		for(int a = 0; a <) //What is this?
-	return 
+	public int hashCode() {
+		return Objects.hash(id);
 	}
-
 }
