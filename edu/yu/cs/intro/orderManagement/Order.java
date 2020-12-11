@@ -62,6 +62,9 @@ public class Order
    public double getProductsTotalPrice()
 {
 	double total = 0.0;
+	if (orderList.isEmpty()) {
+		return total;
+	}
 	for (Item i: orderList) {
 		if (i instanceof Product) {
 			int x = getQuantity(i);
@@ -80,6 +83,9 @@ public class Order
    public double getServicesTotalPrice()
 {
 	double total = 0.0;
+	if (orderList.isEmpty()) {
+		return total;
+	}
 	for (Item i: orderList) {
 		if (i instanceof Service) {
 			int x = getQuantity(i);
