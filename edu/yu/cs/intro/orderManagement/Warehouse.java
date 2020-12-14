@@ -1,21 +1,30 @@
 package edu.yu.cs.intro.orderManagement;
 
 import java.util.Set;
+import java.util.HashMap;
 
 /**
  * Stocks products, fulfills product orders, manages stock of products.
  */
 public class Warehouse {
+     private HashMap<Product, Integer> currentStockLevel;
+	private HashMap<Product, Integer> idealStockLevel;
+	private Set<Product> doNotRestock;
      /**
       * create a warehouse, initialize all the instance variables
       */
      protected Warehouse() {
+          currentStockLevel = new HashMap<>();
+          idealStockLevel = new HashMap<>();
+          doNotRestock = new Set<>();
+	
      }
 
      /**
       * @return all unique Products stocked in the warehouse
       */
      protected Set<Product> getAllProductsInCatalog() {
+          return currentStockLevel.keySet();
      }
 
      /**
@@ -30,6 +39,12 @@ public class Warehouse {
       *                                  warehouse
       */
      protected void addNewProductToWarehouse(Product product, int desiredStockLevel) {
+          if(currentStockLevel.containsKey(product)){
+		throw new IllegalArgumentException();
+	}else{
+		currentStockLevel.put(product, desiredStockLevel);
+		idealStockLevel.put(product, desiredStockLevel);
+	}
      }
 
      /**
