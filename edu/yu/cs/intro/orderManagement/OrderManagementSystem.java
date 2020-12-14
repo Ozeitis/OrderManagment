@@ -124,6 +124,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       * @return get the set of all the products offered/sold by this business
       */
      public Set<Product> getProductCatalog() {
+	     return getAllProductsInCatalog();
      }
 
      /**
