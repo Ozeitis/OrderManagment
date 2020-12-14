@@ -1,13 +1,15 @@
 package edu.yu.cs.intro.orderManagement;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
  * Takes orders, manages the warehouse as well as service providers
  */
 public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
-    Map<Set<Service>, ServiceProviders> servToServer = new HashMap<>();
+    Map<Set<Service>, ServiceProvider> servToServer = new HashMap<>();
      /**
       * Creates a new Warehouse instance and calls the other constructor *
       * 

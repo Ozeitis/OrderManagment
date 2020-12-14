@@ -59,18 +59,22 @@ public class ServiceProvider {
 
 	@Override
 	public boolean equals(Object o) {
-		if (o == this) {
+		if (o == this)
 			return true;
+		if (o == null) {
+			return false;
 		}
-		ServiceProvider other = (ServiceProvider) o;
-		if (this.id == other.getId()) {
-			return true;
+		if (o instanceof ServiceProvider) { // should be instance of Item?
+			ServiceProvider other = (ServiceProvider) o;
+			if (this.id == other.getId()) {
+				return true;
+			}
 		}
 		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(this.id);
 	}
 }
