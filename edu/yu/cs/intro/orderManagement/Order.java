@@ -12,6 +12,7 @@ public class Order {
 
    public Order() {
       this.orderList = new ArrayList<>();
+      orderStatus = false;
    }
 
    /**
