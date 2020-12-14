@@ -81,6 +81,10 @@ public class Warehouse {
       *         stocked
       */
      protected int getStockLevel(int productNumber) {
+	     if(!isInCatalog(productNumber){
+		     return 0;
+	     }
+	     return currentStockLevel.get(idMap.get(productNumber));
      }
 
      /**
@@ -89,6 +93,7 @@ public class Warehouse {
       *         not
       */
      protected boolean isInCatalog(int itemNumber) {
+	     return idMap.containsKey(itemNumber);
      }
 
      /**
@@ -99,6 +104,11 @@ public class Warehouse {
       *         Otherwise true.
       */
      protected boolean isRestockable(int itemNumber) {
+	     if(!isInCatalog(itemNumber)){
+		     return false}
+	     else{
+	     return idealStockLevel.contains(idMap.get(itemNumber))
+	     }
      }
 
      /**
