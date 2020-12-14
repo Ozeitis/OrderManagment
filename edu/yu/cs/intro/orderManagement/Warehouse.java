@@ -11,7 +11,8 @@ public class Warehouse {
      private HashMap<Product, Integer> currentStockLevel;
      private HashMap<Product, Integer> idealStockLevel;
      private HashMap<Integer, Product> idMap;
-	private Set<Product> doNotRestock;
+     private Set<Product> doNotRestock;
+
      /**
       * create a warehouse, initialize all the instance variables
       */
@@ -41,13 +42,13 @@ public class Warehouse {
       *                                  warehouse
       */
      protected void addNewProductToWarehouse(Product product, int desiredStockLevel) {
-          if(currentStockLevel.containsKey(product)){
-		     throw new IllegalArgumentException();
-	     }else{
-		     currentStockLevel.put(product, desiredStockLevel);
+          if (currentStockLevel.containsKey(product)) {
+               throw new IllegalArgumentException();
+          } else {
+               currentStockLevel.put(product, desiredStockLevel);
                idealStockLevel.put(product, desiredStockLevel);
                idMap.put(product.getItemNumber(), product);
-	     }
+          }
      }
 
      /**
@@ -60,10 +61,14 @@ public class Warehouse {
       *                                  set, or if it is not in the catalog
       */
      protected void restock(int productNumber, int minimum) {
+          int greaterThen;
           if (doNotRestock.contains(idMap.get(productNumber)) || !(idMap.containsKey(productNumber))) {
                throw new IllegalArgumentException();
           }
-          if (!(currentStockLevel.containsKey(idMap.get(productNumber)) >= idealStockLevel.containsKey(idMap.get(productNumber)))) {
+          if (idealStockLevel.get(idMap.get(productNumber) >= minimum)) {
+               greaterThen = idealStockLevel.get(idMap.get(productNumber));
+          }
+          if (currentStockLevel.get(idMap.get(productNumber)) < idealStockLevel.get(idMap.get(productNumber))) {
 
           }
      }
@@ -86,10 +91,10 @@ public class Warehouse {
       *         stocked
       */
      protected int getStockLevel(int productNumber) {
-	     if(!isInCatalog(productNumber){
-		     return 0;
-	     }
-	     return currentStockLevel.get(idMap.get(productNumber));
+          if (!isInCatalog(productNumber)) {
+               return 0;
+          }
+          return currentStockLevel.get(idMap.get(productNumber));
      }
 
      /**
@@ -98,7 +103,7 @@ public class Warehouse {
       *         not
       */
      protected boolean isInCatalog(int itemNumber) {
-	     return idMap.containsKey(itemNumber);
+          return idMap.containsKey(itemNumber);
      }
 
      /**
@@ -109,11 +114,11 @@ public class Warehouse {
       *         Otherwise true.
       */
      protected boolean isRestockable(int itemNumber) {
-	     if(!isInCatalog(itemNumber)){
-		     return false}
-	     else{
-	     return idealStockLevel.contains(idMap.get(itemNumber))
-	     }
+          if (!isInCatalog(itemNumber)) {
+               return false;
+          } else {
+               return idealStockLevel.contains(idMap.get(itemNumber));
+          }
      }
 
      /**
@@ -135,16 +140,18 @@ public class Warehouse {
      protected boolean canFulfill(int productNumber, int quantity) {
      }
 
-    /**
-     * Fulfill an order for the given amount of the given product, i.e. lower the stock levels of
-the product by the given amount
-* @param productNumber
-* @param quantity
-* @throws IllegalArgumentException if {@link #canFulfill(int, int)} returns false
-Version / Date: 1.1 / December 10, 2020
-
-6
-*/
-protected void fulfill(int productNumber, int quantity){
+     /**
+      * Fulfill an order for the given amount of the given product, i.e. lower the
+      * stock levels of the product by the given amount
+      * 
+      * @param productNumber
+      * @param quantity
+      * @throws IllegalArgumentException if {@link #canFulfill(int, int)} returns
+      *                                  false Version / Date: 1.1 / December 10,
+      *                                  2020
+      * 
+      *                                  6
+      */
+     protected void fulfill(int productNumber, int quantity) {
      }
 }
