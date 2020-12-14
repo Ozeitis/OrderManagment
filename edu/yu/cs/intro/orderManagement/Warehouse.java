@@ -2,13 +2,15 @@ package edu.yu.cs.intro.orderManagement;
 
 import java.util.Set;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Stocks products, fulfills product orders, manages stock of products.
  */
 public class Warehouse {
      private HashMap<Product, Integer> currentStockLevel;
-	private HashMap<Product, Integer> idealStockLevel;
+     private HashMap<Product, Integer> idealStockLevel;
+     private HashMap<Integer, Product> idMap;
 	private Set<Product> doNotRestock;
      /**
       * create a warehouse, initialize all the instance variables
@@ -16,8 +18,8 @@ public class Warehouse {
      protected Warehouse() {
           currentStockLevel = new HashMap<>();
           idealStockLevel = new HashMap<>();
-          doNotRestock = new Set<>();
-	
+          idMap = new HashMap<>();
+          doNotRestock = new HashSet<>();
      }
 
      /**
@@ -40,11 +42,12 @@ public class Warehouse {
       */
      protected void addNewProductToWarehouse(Product product, int desiredStockLevel) {
           if(currentStockLevel.containsKey(product)){
-		throw new IllegalArgumentException();
-	}else{
-		currentStockLevel.put(product, desiredStockLevel);
-		idealStockLevel.put(product, desiredStockLevel);
-	}
+		     throw new IllegalArgumentException();
+	     }else{
+		     currentStockLevel.put(product, desiredStockLevel);
+               idealStockLevel.put(product, desiredStockLevel);
+               idMap.put(product.getItemNumber(), product);
+	     }
      }
 
      /**
@@ -57,6 +60,9 @@ public class Warehouse {
       *                                  set, or if it is not in the catalog
       */
      protected void restock(int productNumber, int minimum) {
+          if (doNotRestock.contains(idMap.get(productNumber)) || !(idMap.containsKey(productNumber))) {
+               throw new IllegalArgumentException();
+          }
      }
 
      /**
