@@ -32,7 +32,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       * 1) populate the warehouse with the products. 2) retrieve set of services
       * provided by the ServiceProviders, to save it as the set of services the
       * business can provide 3) create map of services to the List of service
-      * providers
+      * providers(As explained by Judah, this means that the key is a specific service and the value is a list of service providers who rpovide that service)
       *
       * @param products                 - set of products to populate the warehouse
       *                                 with
