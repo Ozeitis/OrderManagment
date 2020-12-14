@@ -9,7 +9,10 @@ import java.util.Set;
  * Takes orders, manages the warehouse as well as service providers
  */
 public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
-    Map<Set<Service>, ServiceProvider> servToServer = new HashMap<>();
+    private Warehouse warehouse;
+    private Set<Product> products;
+    private int defaultProductStockLevel;
+    private List<ServiceProvider> serviceProviders;
      /**
       * Creates a new Warehouse instance and calls the other constructor *
       * 
@@ -17,8 +20,12 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       * @param defaultProductStockLevel
       * @param serviceProviders
       */
-     public OrderManagementSystem(Set<Product> products, int defaultProductStockLevel,
-               Set<ServiceProvider> serviceProviders) {
+     public OrderManagementSystem(Set<Product> products, int defaultProductStockLevel, Set<ServiceProvider> serviceProviders) {
+        this.warehouse = new Warehouse;
+	    this.products = products;
+	    this.defaultProductStockLevel = defaultProductStockLevel;
+	    this.serviceProviders = serviceProviders;
+	    OrderManagementSystem(products, defaultProductStockLevel, serviceProviders, this.warehouse);
      }
 
      /**
@@ -37,8 +44,17 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       * @param warehouse                - the warehouse that we will store our
       *                                 products in
       */
-     public OrderManagementSystem(Set<Product> products, int defaultProductStockLevel,
-               Set<ServiceProvider> serviceProviders, Warehouse warehouse) {
+     public OrderManagementSystem(Set<Product> products, int defaultProductStockLevel, Set<ServiceProvider> serviceProviders, Warehouse warehouse) {
+         for (Product p : products) {
+		warehouse.addNewProductToWarehouse(p, defaultProductStockLevel);	
+	    }
+	
+	    Set<Service> services = new HashSet<Service>();
+	for (ServiceProvider servPro : serviceProviders) {
+		this.services.addAll(servPro.getServices());
+		Map<Set<Service>, ServiceProvider> servToServer = new HashMap<>();
+		servToServer.put(servPro.getServices(), servePro);
+	    }
      }
 
      /**
