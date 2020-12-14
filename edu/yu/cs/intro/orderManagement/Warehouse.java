@@ -9,6 +9,7 @@ import java.util.HashMap;
 public class Warehouse {
      private HashMap<Product, Integer> currentStockLevel;
 	private HashMap<Product, Integer> idealStockLevel;
+	private HashMap<Integer, Product> idMap;
 	private Set<Product> doNotRestock;
      /**
       * create a warehouse, initialize all the instance variables
@@ -16,7 +17,9 @@ public class Warehouse {
      protected Warehouse() {
           currentStockLevel = new HashMap<>();
           idealStockLevel = new HashMap<>();
+	  idMap = new HashMap<>();
           doNotRestock = new Set<>();
+	     
 	
      }
 
@@ -44,6 +47,7 @@ public class Warehouse {
 	}else{
 		currentStockLevel.put(product, desiredStockLevel);
 		idealStockLevel.put(product, desiredStockLevel);
+		idMap.put(product.getItemNumber(), product);
 	}
      }
 
