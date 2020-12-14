@@ -21,7 +21,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       * @param serviceProviders
       */
      public OrderManagementSystem(Set<Product> products, int defaultProductStockLevel, Set<ServiceProvider> serviceProviders) {
-        this.warehouse = new Warehouse;
+        this.warehouse = new Warehouse();
 	    this.products = products;
 	    this.defaultProductStockLevel = defaultProductStockLevel;
 	    this.serviceProviders = serviceProviders;
