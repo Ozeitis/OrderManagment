@@ -86,7 +86,7 @@ public class Order {
       for (Item i : orderList) {
          if (i instanceof Service) {
             int x = getQuantity(i);
-            total = total + (x * i.getPrice());
+            total += (x * i.getPrice());
          }
       }
       return total;
