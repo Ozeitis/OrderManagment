@@ -59,12 +59,18 @@ public class Warehouse {
       * @throws IllegalArgumentException if the product is in the "do not restock"
       *                                  set, or if it is not in the catalog
       */
-     protected void restock(int productNumber, int minimum) {
+      protected void restock(int productNumber, int minimum) {
+          int greaterThen;
           if (doNotStock.contains(idMap.get(productNumber)) || !(idMap.containsKey(productNumber))) {
                throw new IllegalArgumentException();
           }
-          if (!(currentStockLevel.containsKey(idMap.get(productNumber)) >= idealStockLevel.containsKey(idMap.get(productNumber)))) {
-
+          if (idealStockLevel.get(idMap.get(productNumber)) >= minimum) {
+               greaterThen = idealStockLevel.get(idMap.get(productNumber));
+          } else {
+               greaterThen = minimum;
+          }
+          if (currentStockLevel.get(idMap.get(productNumber)) < idealStockLevel.get(idMap.get(productNumber))) {
+               currentStockLevel.put(idMap.get(productNumber), greaterThen);
           }
      }
 
