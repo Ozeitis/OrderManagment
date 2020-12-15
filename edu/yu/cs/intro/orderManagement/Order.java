@@ -1,109 +1,71 @@
 package edu.yu.cs.intro.orderManagement;
+import java.util.Map;
 
 /**
  * models an order placed by a customer. An item in the order can be an instance
  * of either Product or Service
  */
-import java.util.ArrayList;
 
 public class Order {
-   private ArrayList<Item> orderList;
-   private boolean orderStatus;
+   private Map<Item, Integer> itemsOrderedMap;
+	private boolean orderStatus;
 
-   public Order() {
-      this.orderList = new ArrayList<>();
-      orderStatus = false;
-   }
+	public Order(){
+		this.itemsOrderedMap = new HashMap<>();
+		this.orderStatus = false;
+	}
 
-   /**
-    * @return all the items (products and services) in the order
-    */
-   public Item[] getItems() {
-      return this.orderList.toArray(new Item[this.orderList.size()]);
-   }
+	public Item[] getItems(){
+		//turn map into keyset and set into array
+		Set<Item> setFromMap = this.itemsOrderedMap.keySet();
+		return setFromMap.toArray(new Item[setFromMap.size()]);
+	}
 
-   /**
-    * @param b
-    * @return the quantity of the given item ordered in this order. Zero if the
-    *         item is not in the order.
-    */
-   public int getQuantity(Item b) {
-      if (!orderList.contains(b)) {
-         return 0;
-      }
-      int quantity = 0;
-      for (Item x : orderList) {
-         if (x.getClass() == b.getClass()) {
-            quantity++;
-         }
-      }
-      return quantity;
-   }
+	public int getQuantity(Item b){
+		// if(!this.itemsOrderedMap.contains(b)){
+		// 	return 0;
+		// }
+		// return this.itemsOrderedMap.get(b);
 
-   /**
-    * Add the given quantity of the given item (product or service) to the order
-    * * @param item
-    * 
-    * @param quantity
-    */
-   public void addToOrder(Item item, int quantity) {
-      for (int i = 0; i < quantity; i++) {
-         orderList.add(i, item);
-      }
-   }
+		return this.itemsOrderedMap.getOrDefault(b, 0);
+	}
 
-   /**
-    * Calculate the total price of PRODUCTS in the order. Must multiply each item's
-    * price by the quantity.
-    * 
-    * @return the total price of products in this order
-    */
-   public double getProductsTotalPrice() {
-      double total = 0.0;
-      if (orderList.isEmpty()) {
-         return total;
-      }
-      for (Item i : orderList) {
-         if (i instanceof Product) {
-            int x = getQuantity(i);
-            total = total + (x * i.getPrice());
-         }
-      }
-      return total;
-   }
+	public void addToOrder(Item item, int quantity){
+		// if(this.itemsOrderedMap.keySet().contains(item)){
+		// 	this.itemsOrderedMap.put(item, this.itemsOrderedMap.get(item) + quantity);
+		// }else{
+		// 	this.itemsOrderedMap.put(item, quantity);
+		// }
 
-   /**
-    * Calculate the total price of the SERVICES in the order. Must multiply each
-    * item's price by the quantity.
-    * 
-    * @return the total price of products in this order
-    */
-   public double getServicesTotalPrice() {
-      double total = 0.0;
-      if (orderList.isEmpty()) {
-         return total;
-      }
-      for (Item i : orderList) {
-         if (i instanceof Service) {
-            int x = getQuantity(i);
-            total += (x * i.getPrice());
-         }
-      }
-      return total;
-   }
+		this.itemsOrderedMap.put(item, this.itemsOrderedMap.getOrDefault(item, 0) + quantity);
 
-   /**
-    * @return has the order been completed by the order management system?
-    */
-   public boolean isCompleted() {
-      return orderStatus;
-   }
+	}
 
-   /**
-    * Indicate if the order has been completed by the order management system
-    * * @param completed
-    */
-   public void setCompleted(boolean completed) {
-      orderStatus = completed;
-   }
+	public double getProductsTotalPrice(){
+		double total = 0.0;
+		for(Item item : this.itemsOrderedMap.getItems()){
+			if(item instanceof Product){
+				total += this.itemsOrderedMap.get(item) * item.getPrice();
+			}
+		}
+		return total;
+	}
+
+	public double getServicesTotalPrice(){
+		double total = 0.0;
+		for(Item item : this.itemsOrderedMap.getItems()){
+			if(item instanceof Service){
+				total += this.itemsOrderedMap.get(item) * item.getPrice();
+			}
+		}
+		return total;
+	}
+
+	public boolean isCompleted(){
+		return this.orderStatus;
+	}
+
+	public void setCompleted(boolean completed) {
+		this.orderStatus = completed;
+	}
 }
