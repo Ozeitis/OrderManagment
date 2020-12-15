@@ -52,9 +52,30 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
 	    Set<Service> services = new HashSet<Service>();
 	for (ServiceProvider servPro : serviceProviders) {
 		this.services.addAll(servPro.getServices());
-		Map<Set<Service>, ServiceProvider> servToServer = new HashMap<>();
-		servToServer.put(servPro.getServices(), servePro);
 	    }
+	//The key will be a service and the value will be all the serviceproviders that can do that service
+	Map<Service, ArrayList<ServiceProvider>> serveToServer = new HashMap<>();
+	//Going through each service that the business offers
+	for (Service bigServ: allServices) {
+		//The list of serviceproviders who offer this specific service
+		List<ServiceProvider> providers = new ArrayList<>();
+		//going through each servciceProvider the business offers
+		for (ServiceProvider servePro: serviceProviders) {
+			//the set of services that this specific serviceprovider provides
+			Set<Service> services = servePro.getServices();
+			//going through the set of services provided by this specific serviceprovider
+			for (Service serv: services) {
+				//if any of the services offered by this service provider equals the service we are checking for,
+				//then the specific serviceprovider is added to the list of service providers
+				if (serv.equals(bigServ)) {
+					providers.add(servePro);
+				}
+			}
+
+
+		}
+		serveToServer.put(bigServ, serveProList)
+	}
      }
 
      /**
