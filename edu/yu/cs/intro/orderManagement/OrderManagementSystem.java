@@ -1,7 +1,10 @@
 package edu.yu.cs.intro.orderManagement;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,7 +15,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
     private Warehouse warehouse;
     private Set<Product> products;
     private int defaultProductStockLevel;
-    private List<ServiceProvider> serviceProviders;
+    private Set<ServiceProvider> serviceProviders;
      /**
       * Creates a new Warehouse instance and calls the other constructor *
       * 
@@ -51,7 +54,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
 	
 	    Set<Service> services = new HashSet<Service>();
 	for (ServiceProvider servPro : serviceProviders) {
-		this.services.addAll(servPro.getServices());
+		services.addAll(servPro.getServices());
 	    }
 	//The key will be a service and the value will be all the serviceproviders that can do that service
 	Map<Service, ArrayList<ServiceProvider>> serveToServer = new HashMap<>();
