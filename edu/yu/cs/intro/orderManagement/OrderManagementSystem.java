@@ -217,7 +217,7 @@ protected int validateProducts(Collection<Product> products, Order order) {
       */
      protected void discontinueItem(Item item) {
      if (item instanceof Product) {
-		this.warehouse.doNotRestock(item, item.getItemNumber())
+		this.warehouse.doNotRestock(item.getItemNumber());
 	}else{
 		this.allServices.remove(item);
 	}
