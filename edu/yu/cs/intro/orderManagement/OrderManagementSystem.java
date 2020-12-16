@@ -181,8 +181,20 @@ protected int validateProducts(Collection<Product> products, Order order) {
       * 
       *         4 already in the warehouse before this was called!)
       */
-     protected Set<Product> addNewProducts(Collection<Product> products) {
-     }
+     protected Set<Product> addNewProducts(Collection<Product> products)
+{
+	Set<Product> warehouseProducts = this.warehouse.getAllProductsInCatalog();
+	Set<Product> newProducts = new HashSet<>();
+
+	for (Product product : products) {
+		this.warehouse.addNewProductToWarehouse(product, this.defaultProductStockLevel);
+
+		if(warehouseProducts.add(product)){
+			newProducts.add(product);
+		}
+	}
+	return newProducts;
+}
 
      /**
       * Adds an additional ServiceProvider to the system. Update all relevant data
