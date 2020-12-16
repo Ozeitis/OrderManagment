@@ -3,6 +3,7 @@ package edu.yu.cs.intro.orderManagement;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.ArraySet;
 
 /**
  * models an order placed by a customer. An item in the order can be an instance
