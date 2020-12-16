@@ -106,8 +106,28 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       *         for at all, or for which we do not have an available provider. Return
       *         0 if all services are valid.
       */
-     protected int validateServices(Collection<Service> services, Order order) {
-     }
+     protected int validateServices(Collection<Service> services, Order order)
+{
+	for (Service service : services) {
+		int x = order.getQuantity(service);
+		List<ServiceProvider> serviceProviders = this.serveToServer.get(service);
+		//Easy check: If order has more requests for a specific service than we have providers for, we can't fulfill it.
+		if (x < serviceProviders.size()) {
+			return service.getItemNumber();
+		}
+		//It could be that we have enough providers in the list, but they aren't all available, so we check that with this
+		for (ServiceProvider server : serviceProviders) {
+			try{
+				server.assignToCustomer();
+				server.endCustomerEngagement();
+			}catch(IllegalStateException e){
+				return service.getItemNumber();
+			}
+		}
+	}
+	//Still worried about when the service provider becomes available
+
+}
 
      /**
       * validate that the requested quantity of products can be fulfilled
@@ -117,8 +137,16 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       * @return itemNumber of product which is either not in the catalog or which we
       *         have insufficient quantity of. Return 0 if we can fulfill.
       */
-     protected int validateProducts(Collection<Product> products, Order order) {
-     }
+     protected int validateProducts(Collection<Product> products, Order order)
+{
+	for (Product prod : products) {
+		int x = order.getQuantity(prod)
+		if (x > this.warehouse.getStockLevel(prod.getItemNumber())) {
+			return prod.getItemNumber();
+		}
+	}
+	return 0;
+}
 
      /**
       * Adds new Products to the set of products that the warehouse can ship/fulfill
