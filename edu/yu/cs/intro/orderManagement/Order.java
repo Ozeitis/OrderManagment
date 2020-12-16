@@ -71,4 +71,24 @@ public class Order {
 	public void setCompleted(boolean completed) {
 		this.orderStatus = completed;
 	}
+	protected List<Service> getServicesList()
+{
+	List<Service> orderServices = new ArrayList<>();
+	for (Item i : this.itemsOrderedMap.keySet()) {
+	 	if (i instanceof Service) {
+	 		orderServices.add(i);
+	 	}
+	 }
+	 return orderServices;
+}
+protected List<Product> getProductsList()
+{
+	List<Product> orderProducts = new ArrayList<>();
+	for (Item i : this.itemsOrderedMap.keySet()) {
+		if (i instanceof Product) {
+		orderProducts.add(i);
+		}
+	}
+		return orderProducts;
+}
 }
