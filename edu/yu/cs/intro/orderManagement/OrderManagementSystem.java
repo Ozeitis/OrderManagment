@@ -14,7 +14,9 @@ import java.util.Set;
 public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
    	private Warehouse warehouse;
    	private Set<Service> allServices;
-	private Map<Service, List<ServiceProvider>> serveToServer;     /**
+	private Map<Service, List<ServiceProvider>> serveToServer;  
+	private int defaultProductStockLevel;
+	/**
       * Creates a new Warehouse instance and calls the other constructor *
       * 
       * @param products
@@ -22,7 +24,8 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       * @param serviceProviders
       */
      public OrderManagementSystem(Set<Product> products, int defaultProductStockLevel, Set<ServiceProvider> serviceProviders) {
-        this.warehouse = new Warehouse();
+       	this.defaultProductStockLevel = defaultProductStockLevel;
+	     this.warehouse = new Warehouse();
 	    OrderManagementSystem(products, defaultProductStockLevel, serviceProviders, this.warehouse);
      }
 
