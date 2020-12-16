@@ -12,11 +12,9 @@ import java.util.Set;
  * Takes orders, manages the warehouse as well as service providers
  */
 public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
-    private Warehouse warehouse;
-    private Set<Product> products;
-    private int defaultProductStockLevel;
-    private Set<ServiceProvider> serviceProviders;
-     /**
+   	private Warehouse warehouse;
+   	private Set<Service> allServices;
+	private Map<Service, ArrayList<ServiceProvider>> serveToServer;     /**
       * Creates a new Warehouse instance and calls the other constructor *
       * 
       * @param products
@@ -25,9 +23,6 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       */
      public OrderManagementSystem(Set<Product> products, int defaultProductStockLevel, Set<ServiceProvider> serviceProviders) {
         this.warehouse = new Warehouse();
-	    this.products = products;
-	    this.defaultProductStockLevel = defaultProductStockLevel;
-	    this.serviceProviders = serviceProviders;
 	    OrderManagementSystem(products, defaultProductStockLevel, serviceProviders, this.warehouse);
      }
 
@@ -49,19 +44,20 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       */
      public OrderManagementSystem(Set<Product> products, int defaultProductStockLevel, Set<ServiceProvider> serviceProviders, Warehouse warehouse) {
          for (Product p : products) {
-		warehouse.addNewProductToWarehouse(p, defaultProductStockLevel);	
-	    }
+		this.warehouse.addNewProductToWarehouse(p, defaultProductStockLevel);	
+	}
 	
-	    Set<Service> services = new HashSet<Service>();
+	this.allServices = new HashSet<Service>();
 	for (ServiceProvider servPro : serviceProviders) {
-		services.addAll(servPro.getServices());
-	    }
+		this.allServices.addAll(servPro.getServices());
+		
+	}
 	//The key will be a service and the value will be all the serviceproviders that can do that service
-	Map<Service, ArrayList<ServiceProvider>> serveToServer = new HashMap<>();
+	this.serveToServer = new HashMap<>();
 	//Going through each service that the business offers
-	for (Service bigServ: allServices) {
+	for (Service bigServ: this.allServices) {
 		//The list of serviceproviders who offer this specific service
-		List<ServiceProvider> providers = new ArrayList<>();
+		List<ServiceProvider> serveProList = new ArrayList<>();
 		//going through each servciceProvider the business offers
 		for (ServiceProvider servePro: serviceProviders) {
 			//the set of services that this specific serviceprovider provides
@@ -71,15 +67,17 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
 				//if any of the services offered by this service provider equals the service we are checking for,
 				//then the specific serviceprovider is added to the list of service providers
 				if (serv.equals(bigServ)) {
-					providers.add(servePro);
+					serveProList.add(servePro);
 				}
 			}
 
 
 		}
-		serveToServer.put(bigServ, serveProList)
+		this.serveToServer.put(bigServ, serveProList)
 	}
-     }
+
+
+}
 
      /**
       * Accept an order: 1) See if we have ServiceProviders for all Services in the
