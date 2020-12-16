@@ -123,8 +123,9 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
 			}catch(IllegalStateException e){
 				return service.getItemNumber();
 			}
-		}
-	}
+          }
+     }
+     return 0;
 	//Still worried about when the service provider becomes available
 
 }
