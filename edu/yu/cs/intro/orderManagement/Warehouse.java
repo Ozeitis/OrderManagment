@@ -174,7 +174,6 @@ public class Warehouse {
      protected void fulfill(int productNumber, int quantity) {
           if(canFulfill(productNumber, quantity) == false){
                throw new IllegalArgumentException();}
-          
           currentStockLevel.put(idMap.get(productNumber), currentStockLevel.get(productNumber) - quantity);
      }
 }

@@ -144,7 +144,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
      protected int validateProducts(Collection<Product> products, Order order)
 {
 	for (Product prod : products) {
-		int x = order.getQuantity(prod)
+		int x = order.getQuantity(prod);
 		if (x > this.warehouse.getStockLevel(prod.getItemNumber())) {
 			return prod.getItemNumber();
 		}
@@ -204,8 +204,22 @@ protected int validateProducts(Collection<Product> products, Order order) {
       * about which Services are offered and which ServiceProviders provide which
       * services * @param provider the provider to add
       */
-     protected void addServiceProvider(ServiceProvider provider) {
-     }
+      protected void addServiceProvider(ServiceProvider provider) { 
+          Set<Service> mapServices = this.serveToServer.keySet();
+          Set<Service> services = provider.getServices();
+                  this.allServices.addAll(services);
+                 for(Service s : services){
+          if(mapServices.contains(s)){
+            List<ServiceProvider> servers = this.serveToServer.get(s);
+            servers.add(provider);
+            this.serveToServer.put(s, servers);
+          }else{
+            List<ServiceProvider> thisServer = new ArrayList<>();
+            thisServer.add(provider);
+            this.serveToServer.put(s, thisServer);
+            }
+          }
+       }
 
      /**
       * *
