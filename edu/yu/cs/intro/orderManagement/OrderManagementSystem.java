@@ -146,14 +146,14 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       * @return get the set of all the products offered/sold by this business
       */
      public Set<Product> getProductCatalog() {
-	     return getAllProductsInCatalog();
+	     return this.warehouse.getAllProductsInCatalog();
      }
 
      /**
       * @return get the set of all the Services offered/sold by this business
       */
      public Set<Service> getOfferedServices() {
-         
+         return this.allServices;
      }
 
      /**
@@ -165,6 +165,11 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       * @param item the item to discontinue see {@link Item}
       */
      protected void discontinueItem(Item item) {
+     if (item instanceof Product) {
+		this.warehouse.doNotRestock(item, item.getItemNumber())
+	}else{
+		this.allServices.remove(item);
+	}
      }
 
 /**
@@ -172,6 +177,6 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
 * @param level
 */
 protected void setDefaultProductStockLevel(Product prod, int level) {
-
+	this.warehouse.setDefaultStockLevel(prod.getItemNumber(), level);
      }
 }
