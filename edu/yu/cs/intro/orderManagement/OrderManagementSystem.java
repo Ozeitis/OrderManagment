@@ -14,7 +14,7 @@ import java.util.Set;
 public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
    	private Warehouse warehouse;
    	private Set<Service> allServices;
-	private Map<Service, ArrayList<ServiceProvider>> serveToServer;     /**
+	private Map<Service, List<ServiceProvider>> serveToServer;     /**
       * Creates a new Warehouse instance and calls the other constructor *
       * 
       * @param products
