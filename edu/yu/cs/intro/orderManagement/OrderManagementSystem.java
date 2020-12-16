@@ -147,6 +147,29 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
 	}
 	return 0;
 }
+/*
+protected int validateServices(Collection<Service> services, Order order) {
+     for(Item i : order.getItems()) {
+          if (i instanceof Service) {
+               if (warehouse.getStockLevel(i.getItemNumber()) != 0 || warehouse.isInCatalog(i.getItemNumber()) == false) {
+                    return i.getItemNumber();
+                    }
+               }
+          }
+     return 0;
+}
+
+protected int validateProducts(Collection<Product> products, Order order) {
+     for(Item i : order.getItems()) {
+          if (i instanceof Product) {
+               if (warehouse.getStockLevel(i.getItemNumber()) != 0 || warehouse.isInCatalog(i.getItemNumber()) == false) {
+                    return i.getItemNumber();
+                    }
+               }
+          }
+     return 0;
+}
+/*
 
      /**
       * Adds new Products to the set of products that the warehouse can ship/fulfill
