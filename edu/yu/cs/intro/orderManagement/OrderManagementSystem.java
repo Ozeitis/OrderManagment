@@ -112,6 +112,10 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
      protected int validateServices(Collection<Service> services, Order order)
 {
 	for (Service service : services) {
+		if(!this.allServices.contains(service)){
+      return service.getItemNumber();
+    
+		}
 		int x = order.getQuantity(service);
 		List<ServiceProvider> serviceProviders = this.serveToServer.get(service);
 		//Easy check: If order has more requests for a specific service than we have providers for, we can't fulfill it.
