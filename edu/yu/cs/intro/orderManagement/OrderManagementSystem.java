@@ -128,7 +128,9 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       */
      public void placeOrder(Order order) {
 
-          validateServices(order.getServicesList(), order); // ADD IF STATEMENTS// How? We need a list of all services
+          if (validateServices(order.getServicesList(), order) != 0) {
+         throw new IllegalStateException();
+       }
 
           for (Item i : order.getItems()) { // ADD ALL CODE TO VALIDATE SERVICE
                // IF SERVICE DO BELOW
@@ -190,14 +192,17 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
                }
                // It could be that we have enough providers in the list, but they aren't all
                // available, so we check that with this
-               for (ServiceProvider server : serviceProviders) {
-                    try {
-                         server.assignToCustomer();
-                         server.endCustomerEngagement();
-                    } catch (IllegalStateException e) {
-                         return service.getItemNumber();
-                    }
+              int counter  = 0;
+              for (ServiceProvider server : serviceProviders) {
+                    int y = this.serviceProviderUses.getOrDefault(server, 0);
+                 		if(y == 0){
+                      counter++;
+                    } 
                }
+              //If we don't have enough service providers, we can't fulfill the service
+              if (counter < this.order.getQuantity(service) {
+                  return service.getItemNumber();
+                 }
           }
           return 0;
           // Still worried about when the service provider becomes available
