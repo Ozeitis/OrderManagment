@@ -173,6 +173,9 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
     
 		}
 >>>>>>> 34ae9289a4d8b3ab6e8e32717f1373eb8fca805f
+		 if(!this.allServices.contains(service)){
+      			return service.getItemNumber();
+    		}
 		int x = order.getQuantity(service);
 		List<ServiceProvider> serviceProviders = this.serveToServer.get(service);
 		//Easy check: If order has more requests for a specific service than we have providers for, we can't fulfill it.
