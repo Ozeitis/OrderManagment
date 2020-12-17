@@ -60,6 +60,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
                Set<ServiceProvider> serviceProviders, Warehouse warehouse) {
           this.defaultProductStockLevel = defaultProductStockLevel;
           this.providersInThisOrder = new HashSet<>();
+          this.serviceProviderUses = new HashMap<>();
           this.warehouse = new Warehouse();
           for (Product p : products) {
                this.warehouse.addNewProductToWarehouse(p, defaultProductStockLevel);
@@ -258,8 +259,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
 
           for (Product product : products) {
                this.warehouse.addNewProductToWarehouse(product, this.defaultProductStockLevel);
-
-               if (warehouseProducts.add(product)) {
+               if (!warehouseProducts.contains(product)) {
                     newProducts.add(product);
                }
           }
