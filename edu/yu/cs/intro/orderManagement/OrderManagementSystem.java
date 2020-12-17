@@ -165,9 +165,10 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
           for (ServiceProvider server : this.serviceProviderUses.keySet()) {
                if (!this.providersInThisOrder.contains(server)) {
                     this.serviceProviderUses.replace(server, this.serviceProviderUses.get(server) + 1);
-                    if (this.serviceProviderUses.get(server) == 3)
+                    if (this.serviceProviderUses.get(server) == 3){
                          server.endCustomerEngagement();
                     this.serviceProviderUses.replace(server, -1);
+                    }
                }
           }
      }
