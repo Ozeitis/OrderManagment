@@ -1,6 +1,8 @@
 package edu.yu.cs.intro.orderManagement;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -71,24 +73,24 @@ public class Order {
 	public void setCompleted(boolean completed) {
 		this.orderStatus = completed;
 	}
-	protected List<Service> getServicesList()
-{
-	List<Service> orderServices = new ArrayList<>();
-	for (Item i : this.itemsOrderedMap.keySet()) {
-	 	if (i instanceof Service) {
-	 		orderServices.add(i);
-	 	}
-	 }
-	 return orderServices;
-}
-protected List<Product> getProductsList()
-{
-	List<Product> orderProducts = new ArrayList<>();
-	for (Item i : this.itemsOrderedMap.keySet()) {
-		if (i instanceof Product) {
-		orderProducts.add(i);
+
+	protected List<Service> getServicesList() {
+		List<Service> orderServices = new ArrayList<>();
+		for (Item i : this.itemsOrderedMap.keySet()) {
+			if (i instanceof Service) {
+				orderServices.add((Service) i);
+			}
 		}
+		return orderServices;
 	}
+
+	protected List<Product> getProductsList() {
+		List<Product> orderProducts = new ArrayList<>();
+		for (Item i : this.itemsOrderedMap.keySet()) {
+			if (i instanceof Product) {
+				orderProducts.add((Product) i);
+			}
+		}
 		return orderProducts;
-}
+	}
 }

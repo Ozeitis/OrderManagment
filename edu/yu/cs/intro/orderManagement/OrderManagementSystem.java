@@ -8,13 +8,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+
+//check if serviceprovider is in map if not add it
+//if its in check the ammount of orders that passed
+//if number is 3 then remove from map
+//if below 3 CHECK DIFF service provider if availabkle and add 1 to orders that passed
+
+//use get or default
 /**
  * Takes orders, manages the warehouse as well as service providers
  */
 public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
    	private Warehouse warehouse;
    	private Set<Service> allServices;
-	private Map<Service, List<ServiceProvider>> serveToServer;  
+     private Map<Service, List<ServiceProvider>> serveToServer;  
+     private Map<ServiceProvider, Integer> serviceProviderUses;
 	private int defaultProductStockLevel;
 	/**
       * Creates a new Warehouse instance and calls the other constructor *
@@ -24,9 +32,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       * @param serviceProviders
       */
      public OrderManagementSystem(Set<Product> products, int defaultProductStockLevel, Set<ServiceProvider> serviceProviders) {
-       	this.defaultProductStockLevel = defaultProductStockLevel;
-	     this.warehouse = new Warehouse();
-	    OrderManagementSystem(products, defaultProductStockLevel, serviceProviders, this.warehouse);
+          this(products, defaultProductStockLevel, serviceProviders, new Warehouse());
      }
 
      /**
@@ -46,6 +52,8 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       *                                 products in
       */
      public OrderManagementSystem(Set<Product> products, int defaultProductStockLevel, Set<ServiceProvider> serviceProviders, Warehouse warehouse) {
+          this.defaultProductStockLevel = defaultProductStockLevel;
+          this.warehouse = new Warehouse();
          for (Product p : products) {
 		this.warehouse.addNewProductToWarehouse(p, defaultProductStockLevel);	
 	}
@@ -83,20 +91,63 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
 }
 
      /**
-      * Accept an order: 1) See if we have ServiceProviders for all Services in the
-      * order. If not, reject the order. 2) See if the we can fulfill the order for
-      * Items. If so, place the product orders with the warehouse and handle the
-      * service orders inside this class 2a) We CAN fulfill a product order if either
-      * the warehouse currently has enough quantity in stock OR if the product is NOT
-      * on the "do not restock" list. In the case that the current quantity of a
-      * product is < the quantity in the order AND the product is NOT on the "do not
-      * restock" list, the order management system should first instruct the
-      * warehouse to restock the item, and then tell the warehouse to fulfill this
-      * order. 3) Mark the order as completed 4) Update busy status of serviced
-      * providers...
-      */
+     * Accept an order:
+     * 1) See if we have ServiceProviders for all Services in the order. If not, reject the order.
+
+     * 2) See if the we can fulfill the order for Items. If so, place the product orders with the warehouse and handle the service orders inside this class
+
+     * 2a) We CAN fulfill a product order if either the warehouse currently has enough quantity in stock OR if the product is NOT on the "do not restock" list.
+     * //if in stock but on do not restock fulfill order if quantity allows it
+     * //first check in stock then check if on do not retsock
+     * //if in stock but on do not restock still fulfill
+     * //if not in stock and not in do not restock - restock
+     * 
+     * 
+     *  In the case that the current quantity of a product is < the quantity in the order AND the product is NOT on the "do not restock" list, the order management system should
+     *  first instruct the warehouse to restock the item, and then tell the warehouse to fulfill this order.
+     * //tell to restock and still fulfill even if not enough stock
+     * 
+     * 3) Mark the order as completed
+     * // call setCompleted
+     * 
+     * 4) Update busy status of serviced providers...
+     * //update the max 3 
+     * //if serviceprovider is busy check another if stuill busy throw error
+     * @throws IllegalArgumentException if any part of the order for PRODUCTS can not be fulfilled
+     * @throws IllegalStateException if any part of the order for SERVICES can not be fulfilled
+     */
      public void placeOrder(Order order) {
-     }
+          for (Item i : order.getItems()){
+               if (i instanceof Service) {
+								if (!this.serviceProviderUses.containsKey(i)) {
+                  //Check if DIFFERENT ServiceProvider is available IF IT IS do same checks - i.e if it is being used less then 3 orders ago.
+                  //assignToCustomer
+                  this.serviceProviderUses.put(i, 1);
+                } else {
+                  if (serviceProviderUses.get(i) = 3) {
+                    serviceProviderUses.remove(i);
+                  } else {
+                    throw new IllegalStateException();
+                  }
+                }
+                 validateServices(order.getServiceList(), order);
+                 
+                    
+               } else {
+                 if (canFulfill(i.getItemNumber) = false && doNotRestock(i.getItemNumber) = true) {
+                   throw new IllegalArgumentException();
+                 } 
+                 
+                 else if (canFulfill(i.getItemNumber) = false && doNotRestock(i.getItemNumber) = false) {
+                 		warehouse.restock(i.getItemNumber, order.getQuantity(i));
+                   warehouse.fulfill(i.getItemNumber, order.getQuantity(i));
+                 } else {
+                   fulfill (i.getItemNumber, order.getQuantity(i));
+                 }
+               }
+                 
+                 order.setCompleted(true);
+     		}
 
      /**
       * Validate that all the services being ordered can be provided. Make sure to
@@ -112,6 +163,9 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
      protected int validateServices(Collection<Service> services, Order order)
 {
 	for (Service service : services) {
+    if(!this.allServices.contains(service)){
+      return service.getItemNumber();
+    }
 		int x = order.getQuantity(service);
 		List<ServiceProvider> serviceProviders = this.serveToServer.get(service);
 		//Easy check: If order has more requests for a specific service than we have providers for, we can't fulfill it.

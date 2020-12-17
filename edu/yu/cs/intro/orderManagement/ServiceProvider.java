@@ -12,7 +12,7 @@ public class ServiceProvider {
 	// this is to mark whether the service provider is busy or not. it is modified
 	// by other methods.
 
-	public ServiceProvider(String name, int id, Set<Service> services) {
+	public ServiceProvider(String name, int id, Set<Service> services) { //add a counter in ordermanagesystem for max 3 uses
 		this.name = name;
 		this.id = id;
 		this.services = new HashSet<>();
