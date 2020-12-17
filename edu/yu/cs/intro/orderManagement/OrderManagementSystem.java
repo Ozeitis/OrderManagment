@@ -24,6 +24,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
      private Map<ServiceProvider, Integer> serviceProviderUses;
      private int defaultProductStockLevel;
      private Map<Service, ServiceProvider> allProviders;
+     private Set<ServiceProvider> providersInThisOrder;
 
      /**
       * Creates a new Warehouse instance and calls the other constructor *
@@ -58,6 +59,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
      public OrderManagementSystem(Set<Product> products, int defaultProductStockLevel,
                Set<ServiceProvider> serviceProviders, Warehouse warehouse) {
           this.defaultProductStockLevel = defaultProductStockLevel;
+          this.providersInThisOrder = new HashSet<>();
           this.warehouse = new Warehouse();
           for (Product p : products) {
                this.warehouse.addNewProductToWarehouse(p, defaultProductStockLevel);
@@ -127,35 +129,33 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       *                                  not be fulfilled
       */
      public void placeOrder(Order order) {
-
           if (validateServices(order.getServicesList(), order) != 0) {
-         throw new IllegalStateException();
-       }
-
+               throw new IllegalStateException();
+          }
           for (Item i : order.getItems()) { // ADD ALL CODE TO VALIDATE SERVICE
-               // IF SERVICE DO BELOW
                if (i instanceof Service) {
-                    if (!this.serviceProviderUses.containsKey(i)) {
-                         // Check if DIFFERENT ServiceProvider is available IF IT IS do same checks - i.e
-                         // if it is being used less then 3 orders ago.
-                         // add assignToCustomer service method
-                         this.serviceProviderUses.put(serveToServer.get(i), 1); // i is a service, param needs a ServiceProvider
-                    } else {
-                         if (serviceProviderUses.get(i) == 3) {
-                              serviceProviderUses.remove(i);
-                         } else {
-                              this.serviceProviderUses.put(i, (this.serviceProviderUses.get(i)+1));
-                              throw new IllegalStateException(); //what happens? Does something catch this?
+                    for (ServiceProvider server : this.serveToServer.get(i)) {
+                         int counter = 0;
+                         while (counter <= order.getQuantity(i)) {
+                              try {
+                                   server.assignToCustomer();
+                                   this.serviceProviderUses.put(server, 0);
+                                   counter++;
+                                   this.providersInThisOrder.add(server);
+                              } catch (IllegalStateException e) {
+                                   continue;
+                              }
                          }
                     }
                } else { // IF PRODUCT DO BELOW
-                    if (warehouse.canFulfill(i.getItemNumber(), order.getQuantity(i)) == false && warehouse.isRestockable(i.getItemNumber()) == true) {
+                    if (this.warehouse.isRestockable(i.getItemNumber()) == false) {
                          throw new IllegalArgumentException();
-                    } else if (warehouse.canFulfill(i.getItemNumber(), order.getQuantity(i)) == false && warehouse.isRestockable(i.getItemNumber()) == false) {
-                         warehouse.restock(i.getItemNumber(), order.getQuantity(i));
-                         warehouse.fulfill(i.getItemNumber(), order.getQuantity(i));
+                    }
+                    if (validateProducts(order.getProductsList(), order) == 0) {
+                         this.warehouse.fulfill(i.getItemNumber(), order.getQuantity(i));
                     } else {
-                         warehouse.fulfill(i.getItemNumber(), order.getQuantity(i));
+                         this.warehouse.restock(i.getItemNumber(), order.getQuantity(i));
+                         this.warehouse.fulfill(i.getItemNumber(), order.getQuantity(i));
                     }
                }
           }
@@ -192,17 +192,19 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
                }
                // It could be that we have enough providers in the list, but they aren't all
                // available, so we check that with this
-              int counter  = 0;
-              for (ServiceProvider server : serviceProviders) {
-                    int y = this.serviceProviderUses.getOrDefault(server, 0);
-                 		if(y == 0){
-                      counter++;
-                    } 
+               // counter will be the number of available service providers for the current
+               // service
+               int counter = 0;
+               for (ServiceProvider server : serviceProviders) {
+                    int y = this.serviceProviderUses.getOrDefault(server, -1);
+                    if (y == -1) {
+                         counter++;
+                    }
                }
-              //If we don't have enough service providers, we can't fulfill the service
-              if (counter < this.order.getQuantity(service) {
-                  return service.getItemNumber();
-                 }
+               // If we don't have enough service providers, we can't fulfill the service
+               if (counter < order.getQuantity(service)) {
+                    return service.getItemNumber();
+               }
           }
           return 0;
           // Still worried about when the service provider becomes available
