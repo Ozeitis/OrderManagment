@@ -27,7 +27,7 @@ public class ServiceProvider {
 		return this.id;
 	}
 
-	protected void assignToCustomer() {
+	protected void assignToCustomer() { // HUGE ISSUE
 		if (this.busy == true) {
 			throw new IllegalStateException();
 		} else {

@@ -23,6 +23,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
      private Map<Service, List<ServiceProvider>> serveToServer;
      private Map<ServiceProvider, Integer> serviceProviderUses;
      private int defaultProductStockLevel;
+     private Map<Service, ServiceProvider> allProviders;
 
      /**
       * Creates a new Warehouse instance and calls the other constructor *
@@ -126,35 +127,38 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       *                                  not be fulfilled
       */
      public void placeOrder(Order order) {
-          for (Item i : order.getItems()) {
+
+          validateServices(order.getServicesList(), order); // ADD IF STATEMENTS// How? We need a list of all services
+
+          for (Item i : order.getItems()) { // ADD ALL CODE TO VALIDATE SERVICE
                // IF SERVICE DO BELOW
                if (i instanceof Service) {
                     if (!this.serviceProviderUses.containsKey(i)) {
                          // Check if DIFFERENT ServiceProvider is available IF IT IS do same checks - i.e
                          // if it is being used less then 3 orders ago.
                          // add assignToCustomer service method
-                         this.serviceProviderUses.put(i, 1); // i is a service, param needs a ServiceProvider
+                         this.serviceProviderUses.put(serveToServer.get(i), 1); // i is a service, param needs a ServiceProvider
                     } else {
                          if (serviceProviderUses.get(i) == 3) {
                               serviceProviderUses.remove(i);
                          } else {
-                              throw new IllegalStateException();
+                              this.serviceProviderUses.put(i, (this.serviceProviderUses.get(i)+1));
+                              throw new IllegalStateException(); //what happens? Does something catch this?
                          }
                     }
-                    validateServices(order.getItems()); // How? We need a list of all services
                } else { // IF PRODUCT DO BELOW
-                    if (warehouse.canFulfill(i.getItemNumber) == false && doNotRestock(i.getItemNumber) == true) {
+                    if (warehouse.canFulfill(i.getItemNumber(), order.getQuantity(i)) == false && warehouse.isRestockable(i.getItemNumber()) == true) {
                          throw new IllegalArgumentException();
-                    } else if (canFulfill(i.getItemNumber) == false && doNotRestock(i.getItemNumber) == false) {
-                         warehouse.restock(i.getItemNumber, order.getQuantity(i));
-                         warehouse.fulfill(i.getItemNumber, order.getQuantity(i));
+                    } else if (warehouse.canFulfill(i.getItemNumber(), order.getQuantity(i)) == false && warehouse.isRestockable(i.getItemNumber()) == false) {
+                         warehouse.restock(i.getItemNumber(), order.getQuantity(i));
+                         warehouse.fulfill(i.getItemNumber(), order.getQuantity(i));
                     } else {
-                         fulfill(i.getItemNumber, order.getQuantity(i));
+                         warehouse.fulfill(i.getItemNumber(), order.getQuantity(i));
                     }
                }
-               // PLACE ORDER
-               order.setCompleted(true);
           }
+          // PLACE ORDER
+          order.setCompleted(true);
      }
 
      /**
