@@ -49,7 +49,6 @@ public class Warehouse {
                currentStockLevel.put(product, desiredStockLevel);
                idealStockLevel.put(product, desiredStockLevel);
                idMap.put(product.getItemNumber(), product);
-               System.out.println("ITEM# " + product.getItemNumber() + " STOCK " + getStockLevel(product.getItemNumber()));
           }
      }
 
@@ -63,13 +62,13 @@ public class Warehouse {
       *                                  set, or if it is not in the catalog
       */
      protected void restock(int productNumber, int minimum) {
-          if (doNotStock.contains(idMap.get(productNumber)) || !(idMap.containsKey(productNumber))) {
+          if (!isRestockable(productNumber) || !(idMap.containsKey(productNumber))) {
                throw new IllegalArgumentException();
           }
-          int isl = idealStockLevel.get(idMap.get(productNumber));
+          // int isl = idealStockLevel.get(idMap.get(productNumber));
           int csl = currentStockLevel.get(idMap.get(productNumber));
           if (csl < minimum) {
-               currentStockLevel.put(idMap.get(productNumber), Math.max(minimum, isl));
+               currentStockLevel.put(idMap.get(productNumber), minimum);
           }
      }
 

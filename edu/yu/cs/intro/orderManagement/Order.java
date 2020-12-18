@@ -34,9 +34,9 @@ public class Order {
 	}
 
 	public void addToOrder(Item item, int quantity) {
-		if(this.itemsOrderedMap.containsKey(item)){
+		if (this.itemsOrderedMap.containsKey(item)) {
 			this.itemsOrderedMap.put(item, this.itemsOrderedMap.get(item) + quantity);
-		} else{
+		} else {
 			this.itemsOrderedMap.put(item, quantity);
 		}
 	}

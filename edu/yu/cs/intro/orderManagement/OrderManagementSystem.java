@@ -23,7 +23,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
      private Map<Service, List<ServiceProvider>> serveToServer;
      private Map<ServiceProvider, Integer> serviceProviderUses;
      private int defaultProductStockLevel;
-     //private Set<ServiceProvider> providersInThisOrder;
+     // private Set<ServiceProvider> providersInThisOrder;
 
      /**
       * Creates a new Warehouse instance and calls the other constructor *
@@ -58,7 +58,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
      public OrderManagementSystem(Set<Product> products, int defaultProductStockLevel,
                Set<ServiceProvider> serviceProviders, Warehouse warehouse) {
           this.defaultProductStockLevel = defaultProductStockLevel;
-          //this.providersInThisOrder = new HashSet<>();
+          // this.providersInThisOrder = new HashSet<>();
           this.serviceProviderUses = new HashMap<>();
           this.warehouse = warehouse;
           for (Product p : products) {
@@ -75,17 +75,14 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
           this.serveToServer = new HashMap<>();
           // Going through each service that the business offers
           for (Service bigServ : this.allServices) {
-          	System.out.println("At service " + bigServ.getDescription() + " in allServices");
                // The list of serviceproviders who offer this specific service
                List<ServiceProvider> serveProList = new ArrayList<>();
                // going through each servciceProvider the business offers
                for (ServiceProvider servePro : serviceProviders) {
-               	System.out.println("At Service Provider " + servePro.getName() + " in serviceProviders");
                     // the set of services that this specific serviceprovider provides
                     Set<Service> services = servePro.getServices();
                     // going through the set of services provided by this specific serviceprovider
                     for (Service serv : services) {
-                    	System.out.println("At service " + serv.getDescription() + " in " + servePro.getName());
                          // if any of the services offered by this service provider equals the service we
                          // are checking for,
                          // then the specific serviceprovider is added to the list of service providers
@@ -97,12 +94,6 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
                }
                this.serveToServer.put(bigServ, serveProList);
           }
-
-
-          for(Service s : this.serveToServer.keySet()){
-          	System.out.println("Service " + s.getDescription() + " is provided by " + listToString(this.serveToServer.get(s)));
-          }
-
      }
 
      /**
@@ -137,9 +128,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       *                                  not be fulfilled
       */
      public void placeOrder(Order order) {
-     	System.out.println("There are " + order.getServicesList().size() + " sevices in the order");
           if (validateServices(order.getServicesList(), order) != 0) {
-               System.out.println("ExceptionTest");
                throw new IllegalStateException();
           }
           Set<ServiceProvider> providersInThisOrder = new HashSet<>();
@@ -153,15 +142,15 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
                                    server.assignToCustomer();
                                    this.serviceProviderUses.put(server, 0);
                                    counter++;
-                                  providersInThisOrder.add(server);
+                                   providersInThisOrder.add(server);
                               } catch (IllegalStateException e) {
-                                   System.out.println(e);
+                                   throw new IllegalStateException();
                               }
                          }
                     }
                     // }
                } else { // IF PRODUCT DO BELOW
-                    if (this.warehouse.isRestockable(i.getItemNumber()) == false) {
+                    if (!this.warehouse.isRestockable(i.getItemNumber())) {
                          throw new IllegalArgumentException();
                     }
                     if (validateProducts(order.getProductsList(), order) == 0) {
@@ -172,21 +161,13 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
                     }
                }
           }
-          String printOrder = "";
-          for(Item i : order.getItems()){
-          	printOrder += order.getQuantity(i) + " of " + i.getDescription(); 
-          }
-          System.out.println("This order contains: " + printOrder);
 
           // PLACE ORDER
           order.setCompleted(true);
           for (ServiceProvider server : this.serviceProviderUses.keySet()) {
-          	System.out.println("For loop");
                if (!providersInThisOrder.contains(server)) {
-               		System.out.println("TEST1");
                     this.serviceProviderUses.replace(server, this.serviceProviderUses.get(server) + 1);
                     if (this.serviceProviderUses.get(server) == 3) {
-                    	System.out.println("Test2");
                          server.endCustomerEngagement();
                          this.serviceProviderUses.put(server, -1);
                     }
@@ -207,9 +188,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       */
      protected int validateServices(Collection<Service> services, Order order) {
           for (Service service : services) {
-          		System.out.println("Validating service: " + service.getDescription());
                if (!this.allServices.contains(service)) {
-               		System.out.println(service.getDescription() + " is not in allServices");
                     return service.getItemNumber();
                }
                int x = order.getQuantity(service);
@@ -217,8 +196,6 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
                // Easy check: If order has more requests for a specific service than we have
                // providers for, we can't fulfill it.
                if (x > serviceProviders.size()) {
-               		System.out.println("number of sp: " + this.serveToServer.get(service).size() + ", number of services: " + x);
-               		System.out.println("second test");
                     return service.getItemNumber();
                }
                // It could be that we have enough providers in the list, but they aren't all
@@ -228,15 +205,12 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
                int counter = 0;
                for (ServiceProvider server : serviceProviders) {
                     int y = this.serviceProviderUses.getOrDefault(server, -1);
-                    System.out.println(y);
-                    System.out.println("ValidatingService");
                     if (y == -1) {
                          counter++;
                     }
                }
                // If we don't have enough service providers, we can't fulfill the service
                if (counter < order.getQuantity(service)) {
-               		System.out.println("Iwanttogotosleep");
                     return service.getItemNumber();
                }
           }
@@ -349,11 +323,11 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
           this.warehouse.setDefaultStockLevel(prod.getItemNumber(), level);
      }
 
-     protected String listToString(List<ServiceProvider> input){
-     	String returnString = "";
-     	for(ServiceProvider sP : input){
-     		returnString += sP.getName() + ", ";
-     	}
-     	return returnString;
+     protected String listToString(List<ServiceProvider> input) {
+          String returnString = "";
+          for (ServiceProvider sP : input) {
+               returnString += sP.getName() + ", ";
+          }
+          return returnString;
      }
 }
