@@ -203,9 +203,17 @@ public class TestsHW8 {
 		OrderManagementSystem testOMS = new OrderManagementSystem(prdcts, 10, svcPvdrs);
 		System.out.println("OMS created");
 
+		Order order = new Order();
+		order.addToOrder(testStock1, 40);
+		order.addToOrder(s4, 1);
+		testOMS.placeOrder(order);
+
+		Set<Product> catalog = testOMS.getProductCatalog();
+		Set<Service> offeredServices = testOMS.getOfferedServices();
+		System.out.println("testOMS catalog: " + setToStringProducts(catalog));
+		System.out.println("testOMS offeredServices: " + setToString(offeredServices));
+
 		//idk the rest
 
 	}
 
-
-}
