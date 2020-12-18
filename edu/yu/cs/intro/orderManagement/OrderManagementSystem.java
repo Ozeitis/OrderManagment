@@ -60,7 +60,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
           this.defaultProductStockLevel = defaultProductStockLevel;
           this.providersInThisOrder = new HashSet<>();
           this.serviceProviderUses = new HashMap<>();
-          this.warehouse = new Warehouse();
+          this.warehouse = warehouse;
           for (Product p : products) {
                this.warehouse.addNewProductToWarehouse(p, defaultProductStockLevel);
           }
@@ -132,10 +132,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
           if (validateServices(order.getServicesList(), order) != 0) {
                throw new IllegalStateException();
           }
-          int xy = 0;
           for (Item i : order.getItems()) {// ADD ALL CODE TO VALIDATE SERVICE
-               xy++;
-               System.out.println(xy);
                if (i instanceof Service) {
                     int counter = 0;
                     // while (counter <= order.getQuantity(i)) {
@@ -146,9 +143,8 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
                                    this.serviceProviderUses.put(server, 0);
                                    counter++;
                                    this.providersInThisOrder.add(server);
-                                   System.out.println("TRY");
                               } catch (IllegalStateException e) {
-                                   System.out.println("CATCH");
+                                   System.out.println(e);
                               }
                          }
                     }
@@ -232,36 +228,23 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       */
      protected int validateProducts(Collection<Product> products, Order order) {
           for (Product prod : products) {
-               int x = order.getQuantity(prod);
-               if (x > this.warehouse.getStockLevel(prod.getItemNumber())) {
+               int qOrdered = order.getQuantity(prod);
+               if (qOrdered > this.warehouse.getStockLevel(prod.getItemNumber())) {
                     return prod.getItemNumber();
                }
           }
           return 0;
      }
 
-     /*
-      * protected int validateServices(Collection<Service> services, Order order) {
-      * for(Item i : order.getItems()) { if (i instanceof Service) { if
-      * (warehouse.getStockLevel(i.getItemNumber()) != 0 ||
-      * warehouse.isInCatalog(i.getItemNumber()) == false) { return
-      * i.getItemNumber(); } } } return 0; }
-      * 
-      * protected int validateProducts(Collection<Product> products, Order order) {
-      * for(Item i : order.getItems()) { if (i instanceof Product) { if
-      * (warehouse.getStockLevel(i.getItemNumber()) != 0 ||
-      * warehouse.isInCatalog(i.getItemNumber()) == false) { return
-      * i.getItemNumber(); } } } return 0; } /*
-      * 
-      * /** Adds new Products to the set of products that the warehouse can
-      * ship/fulfill
+     /**
+      * Adds new Products to the set of products that the warehouse can ship/fulfill
       * 
       * @param products the products to add to the warehouse
       * 
       * @return set of products that were actually added (don't include any products
-      * that were Version / Date: 1.1 / December 10, 2020
+      *         that were Version / Date: 1.1 / December 10, 2020
       * 
-      * 4 already in the warehouse before this was called!)
+      *         4 already in the warehouse before this was called!)
       */
      protected Set<Product> addNewProducts(Collection<Product> products) {
           Set<Product> warehouseProducts = this.warehouse.getAllProductsInCatalog();

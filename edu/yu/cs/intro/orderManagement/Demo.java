@@ -50,7 +50,6 @@ public class Demo {
                 order.addToOrder(this.idToProduct.get(1), 3); // will use out of 5 of product #1
                 order.addToOrder(this.idToService.get(6), 1); // will use the only service provider for #6
                 system.placeOrder(order);
-                System.out.println(this.warehouse.getStockLevel(1));
                 assert this.warehouse.getStockLevel(1) == 2;
                 assert order.isCompleted();
                 // place another order, should throw IllegalStateException

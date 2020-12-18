@@ -27,23 +27,18 @@ public class Order {
 	}
 
 	public int getQuantity(Item b) {
-		// if(!this.itemsOrderedMap.contains(b)){
-		// return 0;
-		// }
-		// return this.itemsOrderedMap.get(b);
-
-		return this.itemsOrderedMap.getOrDefault(b, 0);
+		if (!this.itemsOrderedMap.containsKey(b)) {
+			return 0;
+		}
+		return this.itemsOrderedMap.get(b);
 	}
 
 	public void addToOrder(Item item, int quantity) {
-		// if(this.itemsOrderedMap.keySet().contains(item)){
-		// this.itemsOrderedMap.put(item, this.itemsOrderedMap.get(item) + quantity);
-		// }else{
-		// this.itemsOrderedMap.put(item, quantity);
-		// }
-
-		this.itemsOrderedMap.put(item, this.itemsOrderedMap.getOrDefault(item, 0) + quantity);
-
+		if(this.itemsOrderedMap.containsKey(item)){
+			this.itemsOrderedMap.put(item, this.itemsOrderedMap.get(item) + quantity);
+		} else{
+			this.itemsOrderedMap.put(item, quantity);
+		}
 	}
 
 	public double getProductsTotalPrice() {
