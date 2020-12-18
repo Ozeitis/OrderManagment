@@ -23,7 +23,6 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
      private Map<Service, List<ServiceProvider>> serveToServer;
      private Map<ServiceProvider, Integer> serviceProviderUses;
      private int defaultProductStockLevel;
-     private Map<Service, ServiceProvider> allProviders;
      private Set<ServiceProvider> providersInThisOrder;
 
      /**
@@ -133,21 +132,27 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
           if (validateServices(order.getServicesList(), order) != 0) {
                throw new IllegalStateException();
           }
-          for (Item i : order.getItems()) { // ADD ALL CODE TO VALIDATE SERVICE
+          int xy = 0;
+          for (Item i : order.getItems()) {// ADD ALL CODE TO VALIDATE SERVICE
+               xy++;
+               System.out.println(xy);
                if (i instanceof Service) {
+                    int counter = 0;
+                    // while (counter <= order.getQuantity(i)) {
                     for (ServiceProvider server : this.serveToServer.get(i)) {
-                         int counter = 0;
-                         while (counter <= order.getQuantity(i)) {
+                         if (counter <= order.getQuantity(i)) {
                               try {
                                    server.assignToCustomer();
                                    this.serviceProviderUses.put(server, 0);
                                    counter++;
                                    this.providersInThisOrder.add(server);
+                                   System.out.println("TRY");
                               } catch (IllegalStateException e) {
-                                   continue;
+                                   System.out.println("CATCH");
                               }
                          }
                     }
+                    // }
                } else { // IF PRODUCT DO BELOW
                     if (this.warehouse.isRestockable(i.getItemNumber()) == false) {
                          throw new IllegalArgumentException();
@@ -165,9 +170,10 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
           for (ServiceProvider server : this.serviceProviderUses.keySet()) {
                if (!this.providersInThisOrder.contains(server)) {
                     this.serviceProviderUses.replace(server, this.serviceProviderUses.get(server) + 1);
-                    if (this.serviceProviderUses.get(server) == 3)
+                    if (this.serviceProviderUses.get(server) == 3) {
                          server.endCustomerEngagement();
-                    this.serviceProviderUses.replace(server, -1);
+                         this.serviceProviderUses.replace(server, -1);
+                    }
                }
           }
      }
@@ -187,16 +193,12 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
           for (Service service : services) {
                if (!this.allServices.contains(service)) {
                     return service.getItemNumber();
-
-               }
-               if (!this.allServices.contains(service)) {
-                    return service.getItemNumber();
                }
                int x = order.getQuantity(service);
                List<ServiceProvider> serviceProviders = this.serveToServer.get(service);
                // Easy check: If order has more requests for a specific service than we have
                // providers for, we can't fulfill it.
-               if (x < serviceProviders.size()) {
+               if (x > serviceProviders.size()) {
                     return service.getItemNumber();
                }
                // It could be that we have enough providers in the list, but they aren't all

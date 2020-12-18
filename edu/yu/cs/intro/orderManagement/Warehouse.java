@@ -17,10 +17,10 @@ public class Warehouse {
       * create a warehouse, initialize all the instance variables
       */
      protected Warehouse() {
-          currentStockLevel = new HashMap<>();
-          idealStockLevel = new HashMap<>();
-          idMap = new HashMap<>();
-          doNotStock = new HashSet<>();
+          this.currentStockLevel = new HashMap<>();
+          this.idealStockLevel = new HashMap<>();
+          this.idMap = new HashMap<>();
+          this.doNotStock = new HashSet<>();
      }
 
      /**
@@ -48,6 +48,8 @@ public class Warehouse {
                currentStockLevel.put(product, desiredStockLevel);
                idealStockLevel.put(product, desiredStockLevel);
                idMap.put(product.getItemNumber(), product);
+               System.out.println(
+                         "ITEM# " + product.getItemNumber() + " STOCK " + getStockLevel(product.getItemNumber()));
           }
      }
 
