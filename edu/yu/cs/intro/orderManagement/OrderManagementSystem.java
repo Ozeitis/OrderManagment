@@ -20,28 +20,6 @@ import java.util.Set;
 public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
      private Warehouse warehouse;
      private Set<Service> allServices;
-package edu.yu.cs.intro.orderManagement;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-//check if serviceprovider is in map if not add it
-//if its in check the ammount of orders that passed
-//if number is 3 then remove from map
-//if below 3 CHECK DIFF service provider if availabkle and add 1 to orders that passed
-
-//use get or default
-/**
- * Takes orders, manages the warehouse as well as service providers
- */
-public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
-     private Warehouse warehouse;
-     private Set<Service> allServices;
      private Map<Service, List<ServiceProvider>> serveToServer;
      private Map<ServiceProvider, Integer> serviceProviderUses;
      private int defaultProductStockLevel;
@@ -97,14 +75,17 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
           this.serveToServer = new HashMap<>();
           // Going through each service that the business offers
           for (Service bigServ : this.allServices) {
+          	System.out.println("At service " + bigServ.getDescription() + " in allServices");
                // The list of serviceproviders who offer this specific service
                List<ServiceProvider> serveProList = new ArrayList<>();
                // going through each servciceProvider the business offers
                for (ServiceProvider servePro : serviceProviders) {
+               	System.out.println("At Service Provider " + servePro.getName() + " in serviceProviders");
                     // the set of services that this specific serviceprovider provides
                     Set<Service> services = servePro.getServices();
                     // going through the set of services provided by this specific serviceprovider
                     for (Service serv : services) {
+                    	System.out.println("At service " + serv.getDescription() + " in " + servePro.getName());
                          // if any of the services offered by this service provider equals the service we
                          // are checking for,
                          // then the specific serviceprovider is added to the list of service providers
@@ -115,6 +96,11 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
 
                }
                this.serveToServer.put(bigServ, serveProList);
+          }
+
+
+          for(Service s : this.serveToServer.keySet()){
+          	System.out.println("Service " + s.getDescription() + " is provided by " + listToString(this.serveToServer.get(s)));
           }
 
      }
@@ -151,6 +137,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       *                                  not be fulfilled
       */
      public void placeOrder(Order order) {
+     	System.out.println("There are " + order.getServicesList().size() + " sevices in the order");
           if (validateServices(order.getServicesList(), order) != 0) {
                System.out.println("ExceptionTest");
                throw new IllegalStateException();
@@ -185,6 +172,12 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
                     }
                }
           }
+          String printOrder = "";
+          for(Item i : order.getItems()){
+          	printOrder += order.getQuantity(i) + " of " + i.getDescription(); 
+          }
+          System.out.println("This order contains: " + printOrder);
+
           // PLACE ORDER
           order.setCompleted(true);
           for (ServiceProvider server : this.serviceProviderUses.keySet()) {
@@ -214,7 +207,9 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       */
      protected int validateServices(Collection<Service> services, Order order) {
           for (Service service : services) {
+          		System.out.println("Validating service: " + service.getDescription());
                if (!this.allServices.contains(service)) {
+               		System.out.println(service.getDescription() + " is not in allServices");
                     return service.getItemNumber();
                }
                int x = order.getQuantity(service);
@@ -222,6 +217,8 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
                // Easy check: If order has more requests for a specific service than we have
                // providers for, we can't fulfill it.
                if (x > serviceProviders.size()) {
+               		System.out.println("number of sp: " + this.serveToServer.get(service).size() + ", number of services: " + x);
+               		System.out.println("second test");
                     return service.getItemNumber();
                }
                // It could be that we have enough providers in the list, but they aren't all
@@ -350,5 +347,13 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       */
      protected void setDefaultProductStockLevel(Product prod, int level) {
           this.warehouse.setDefaultStockLevel(prod.getItemNumber(), level);
+     }
+
+     protected String listToString(List<ServiceProvider> input){
+     	String returnString = "";
+     	for(ServiceProvider sP : input){
+     		returnString += sP.getName() + ", ";
+     	}
+     	return returnString;
      }
 }
