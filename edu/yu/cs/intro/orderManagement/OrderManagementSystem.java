@@ -20,10 +20,32 @@ import java.util.Set;
 public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
      private Warehouse warehouse;
      private Set<Service> allServices;
+package edu.yu.cs.intro.orderManagement;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+//check if serviceprovider is in map if not add it
+//if its in check the ammount of orders that passed
+//if number is 3 then remove from map
+//if below 3 CHECK DIFF service provider if availabkle and add 1 to orders that passed
+
+//use get or default
+/**
+ * Takes orders, manages the warehouse as well as service providers
+ */
+public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
+     private Warehouse warehouse;
+     private Set<Service> allServices;
      private Map<Service, List<ServiceProvider>> serveToServer;
      private Map<ServiceProvider, Integer> serviceProviderUses;
      private int defaultProductStockLevel;
-     private Set<ServiceProvider> providersInThisOrder;
+     //private Set<ServiceProvider> providersInThisOrder;
 
      /**
       * Creates a new Warehouse instance and calls the other constructor *
@@ -58,7 +80,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
      public OrderManagementSystem(Set<Product> products, int defaultProductStockLevel,
                Set<ServiceProvider> serviceProviders, Warehouse warehouse) {
           this.defaultProductStockLevel = defaultProductStockLevel;
-          this.providersInThisOrder = new HashSet<>();
+          //this.providersInThisOrder = new HashSet<>();
           this.serviceProviderUses = new HashMap<>();
           this.warehouse = warehouse;
           for (Product p : products) {
@@ -130,8 +152,10 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
       */
      public void placeOrder(Order order) {
           if (validateServices(order.getServicesList(), order) != 0) {
+               System.out.println("ExceptionTest");
                throw new IllegalStateException();
           }
+          Set<ServiceProvider> providersInThisOrder = new HashSet<>();
           for (Item i : order.getItems()) {// ADD ALL CODE TO VALIDATE SERVICE
                if (i instanceof Service) {
                     int counter = 0;
@@ -142,7 +166,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
                                    server.assignToCustomer();
                                    this.serviceProviderUses.put(server, 0);
                                    counter++;
-                                   this.providersInThisOrder.add(server);
+                                  providersInThisOrder.add(server);
                               } catch (IllegalStateException e) {
                                    System.out.println(e);
                               }
@@ -164,11 +188,14 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
           // PLACE ORDER
           order.setCompleted(true);
           for (ServiceProvider server : this.serviceProviderUses.keySet()) {
-               if (!this.providersInThisOrder.contains(server)) {
+          	System.out.println("For loop");
+               if (!providersInThisOrder.contains(server)) {
+               		System.out.println("TEST1");
                     this.serviceProviderUses.replace(server, this.serviceProviderUses.get(server) + 1);
                     if (this.serviceProviderUses.get(server) == 3) {
+                    	System.out.println("Test2");
                          server.endCustomerEngagement();
-                         this.serviceProviderUses.replace(server, -1);
+                         this.serviceProviderUses.put(server, -1);
                     }
                }
           }
@@ -204,12 +231,15 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
                int counter = 0;
                for (ServiceProvider server : serviceProviders) {
                     int y = this.serviceProviderUses.getOrDefault(server, -1);
+                    System.out.println(y);
+                    System.out.println("ValidatingService");
                     if (y == -1) {
                          counter++;
                     }
                }
                // If we don't have enough service providers, we can't fulfill the service
                if (counter < order.getQuantity(service)) {
+               		System.out.println("Iwanttogotosleep");
                     return service.getItemNumber();
                }
           }
