@@ -1,3 +1,4 @@
+
 package edu.yu.cs.intro.orderManagement;
 
 import java.util.Set;
@@ -48,8 +49,7 @@ public class Warehouse {
                currentStockLevel.put(product, desiredStockLevel);
                idealStockLevel.put(product, desiredStockLevel);
                idMap.put(product.getItemNumber(), product);
-               System.out.println(
-                         "ITEM# " + product.getItemNumber() + " STOCK " + getStockLevel(product.getItemNumber()));
+               System.out.println("ITEM# " + product.getItemNumber() + " STOCK " + getStockLevel(product.getItemNumber()));
           }
      }
 
