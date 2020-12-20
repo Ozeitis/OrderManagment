@@ -1,5 +1,4 @@
 package edu.yu.cs.intro.orderManagement;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -8,26 +7,39 @@ import java.util.Set;
 public class TestsHW8 {
 
 	public static void main(String[] args) {
-		System.out.println("Testing Service:");
-		testService();
-		System.out.println();
-		System.out.println("Testing Product:");
-		testProduct();
-		System.out.println();
-		System.out.println("Testing ServiceProvider:");
-		testServiveProvider();
-		System.out.println();
-		System.out.println("Testing Order:");
-		testOrder();
-		System.out.println();
-		System.out.println("Testing Warehouse:");
-		testWarehouse();
-		System.out.println();
-		System.out.println("Testing OMS:");
-		testOMS();
+		// System.out.println("Testing Service:");
+		// testService();
+		// System.out.println();
+		// System.out.println("Testing Product:");
+		// testProduct();
+		// System.out.println();
+		// System.out.println("Testing ServiceProvider:");
+		// testServiveProvider();
+		// System.out.println();
+		// System.out.println("Testing Order:");
+		// testOrder();
+		// System.out.println();
+		// System.out.println("Testing Warehouse:");
+		// testWarehouse();
+		// System.out.println();
+		// System.out.println("Testing OMS:");
+		// testOMS();
+
+
+		// System.out.println("Testing validateProducts:");
+		// testValidateProducts();
+		// System.out.println("Testing runDownStockViaOrdersRestoreToDefaultLevel:");
+		// runDownStockViaOrdersRestoreToDefaultLevel();
+		System.out.println("Testing restockToLowerAndGetStockLevel:");
+		restockToLowerAndGetStockLevel();
+
+
+
 	}
 
-	public static void testService() {
+
+
+	public static void testService(){
 		double pricePerHour = 20;
 		int numberOfHours = 4;
 		int serviceID = 221;
@@ -47,7 +59,9 @@ public class TestsHW8 {
 		System.out.println("testEqual2 does equal testItem: " + (testItem.hashCode() == testEqual2.hashCode()));
 	}
 
-	public static void testProduct() {
+
+
+	public static void testProduct(){
 		double price = 15;
 		int productID = 212;
 		String name = "Ball";
@@ -65,7 +79,9 @@ public class TestsHW8 {
 		System.out.println("testEqual2 does equal testItem: " + (testItem.hashCode() == testEqual2.hashCode()));
 	}
 
-	public static void testServiveProvider() {
+
+
+	public static void testServiveProvider(){
 		String name = "Coach";
 		int id = 21;
 		Set<Service> services = new HashSet<>();
@@ -78,14 +94,13 @@ public class TestsHW8 {
 		services.add(s3);
 
 		ServiceProvider testProvider = new ServiceProvider(name, id, services);
-		System.out.println("Title: " + testProvider.getName() + ", ID: " + testProvider.getId() + ", Services: "
-				+ setToString(services));
+		System.out.println("Title: " + testProvider.getName() + ", ID: " + testProvider.getId() + ", Services: " + setToString(services));
 
 		testProvider.assignToCustomer();
-		System.out.println("Assigned"); // Not sure how to test this
+		System.out.println("Assigned"); //Not sure how to test this
 
 		testProvider.endCustomerEngagement();
-		System.out.println("Unengaged"); // Not sure how to test this
+		System.out.println("Unengaged"); //Not sure how to test this
 
 		System.out.println("s4 was added to services: " + testProvider.addService(s4));
 		System.out.println("s1 was removed from services: " + testProvider.removeService(s1));
@@ -102,16 +117,17 @@ public class TestsHW8 {
 		System.out.println("testEqual1 does not equal testItem, equals() returns: " + testProvider.equals(testEqual1));
 		System.out.println("testEqual2 does equal testItem: " + (testProvider.hashCode() == testEqual2.hashCode()));
 	}
-
-	public static String setToString(Set<Service> inputService) {
+	public static String setToString(Set<Service> inputService){
 		String returnString = "";
-		for (Service s : inputService) {
+		for(Service s : inputService){
 			returnString += s.getDescription() + ", ";
 		}
 		return returnString;
 	}
 
-	public static void testOrder() {
+
+
+	public static void testOrder(){
 		Order testOrder = new Order();
 		System.out.println("New Order created");
 
@@ -127,16 +143,17 @@ public class TestsHW8 {
 		testOrder.addToOrder(testProduct, 30);
 		testOrder.addToOrder(testService, 3);
 
-		for (Item itm : testOrder.getItems()) {
+		for(Item itm : testOrder.getItems()){
 			System.out.println(testOrder.getQuantity(itm) + " of " + itm.getDescription() + " at " + itm.getPrice());
 		}
-		System.out.println("Services will cost $" + testOrder.getServicesTotalPrice() + " and Products will colt $"
-				+ testOrder.getProductsTotalPrice());
+		System.out.println("Services will cost $" + testOrder.getServicesTotalPrice() + " and Products will colt $" + testOrder.getProductsTotalPrice());
 
-		// check completing
+		//check completing
 	}
 
-	public static void testWarehouse() {
+
+
+	public static void testWarehouse(){
 		Warehouse testWH = new Warehouse();
 		System.out.println("Empty Warehouse created");
 
@@ -146,28 +163,28 @@ public class TestsHW8 {
 		testWH.addNewProductToWarehouse(testStock2, 50);
 		System.out.println("Current catalog: " + setToStringProducts(testWH.getAllProductsInCatalog()));
 		System.out.println("Current stock of Balls: " + testWH.getStockLevel(212));
-		System.out.println(
-				"There is a product whose ID is 44 in the testWH: " + testWH.isInCatalog(testStock2.getItemNumber()));
+		System.out.println("There is a product whose ID is 44 in the testWH: " + testWH.isInCatalog(testStock2.getItemNumber()));
+		
+		System.out.println("testStock1 is on doNotRestock list, and this is how many remain currently: " + testWH.doNotRestock(testStock1.getItemNumber()));	
 
-		System.out.println("testStock1 is on doNotRestock list, and this is how many remain currently: "
-				+ testWH.doNotRestock(testStock1.getItemNumber()));
 
 		System.out.println("The warehouse can fulfill the order: " + testWH.canFulfill(212, 50));
 		System.out.println("Current stock of Balls: " + testWH.getStockLevel(212));
 		System.out.println("Balls can be restocked: " + testWH.isRestockable(212));
-		// Need to check later, after order is placed, that stock changes, and fulfills
+		//Need to check later, after order is placed, that stock changes, and fulfills
 
 	}
-
-	public static String setToStringProducts(Set<Product> input) {
+	public static String setToStringProducts(Set<Product> input){
 		String returnString = "";
-		for (Product p : input) {
+		for(Product p : input){
 			returnString += p.getDescription() + ", ";
 		}
 		return returnString;
 	}
 
-	public static void testOMS() {
+
+
+	public static void testOMS(){
 		Set<Product> prdcts = new HashSet<>();
 		Product testStock1 = new Product("Ball", 15, 212);
 		Product testStock2 = new Product("Stick", 2, 44);
@@ -193,7 +210,7 @@ public class TestsHW8 {
 		ServiceProvider testEqual1 = new ServiceProvider("Steve", 33, copy);
 		svcPvdrs.add(testProvider);
 		svcPvdrs.add(testEqual1);
-
+		
 		OrderManagementSystem testOMS = new OrderManagementSystem(prdcts, 10, svcPvdrs);
 		System.out.println("OMS created");
 
@@ -207,7 +224,80 @@ public class TestsHW8 {
 		System.out.println("testOMS catalog: " + setToStringProducts(catalog));
 		System.out.println("testOMS offeredServices: " + setToString(offeredServices));
 
-		// idk the rest
+		//idk the rest
 
 	}
+
+	// public static testValidateProducts(){
+
+	// }
+
+	public static void runDownStockViaOrdersRestoreToDefaultLevel(){
+		int ogDefaultStock = 5;
+		Set<Product> prdcts = new HashSet<>();
+		Product p1 = new Product("p1", 15, 1);
+		Product p2 = new Product("p2", 2, 2);
+		prdcts.add(p1);
+		prdcts.add(p2);
+		Set<ServiceProvider> svcPvdrs = new HashSet<>();
+		OrderManagementSystem testOMS = new OrderManagementSystem(prdcts, ogDefaultStock, svcPvdrs);
+		System.out.println("OMS created");
+
+		Order o1 = new Order();
+		o1.addToOrder(p2, 4);
+		testOMS.placeOrder(o1);
+		System.out.println("o1 placed r1");
+
+		o1 = new Order();
+		o1.addToOrder(p2, 1);
+		testOMS.placeOrder(o1);
+		System.out.println("o1 placed r2");
+
+		testOMS.discontinueItem(p2);
+		o1 = new Order();
+		o1.addToOrder(p2, 5);
+		testOMS.placeOrder(o1);
+		System.out.println("o1 placed r3, p2 discont");
+
+		o1 = new Order();
+		o1.addToOrder(p2, 1);
+		testOMS.placeOrder(o1);
+		System.out.println("o1 placed again, cannot fulfill");
+
+	}
+
+	public static void restockToLowerAndGetStockLevel(){
+		int ogDefaultStock = 5;
+		Set<Product> prdcts = new HashSet<>();
+		Product p1 = new Product("p1", 15, 1);
+		Product p2 = new Product("p2", 2, 2);
+		prdcts.add(p1);
+		prdcts.add(p2);
+		Set<ServiceProvider> svcPvdrs = new HashSet<>();
+		OrderManagementSystem testOMS = new OrderManagementSystem(prdcts, ogDefaultStock, svcPvdrs);
+		System.out.println("OMS created");
+
+		testOMS.setDefaultProductStockLevel(p1,1);
+
+		Order o1 = new Order();
+		o1.addToOrder(p1, 5);
+		testOMS.placeOrder(o1);
+		System.out.println("o1 placed r1");
+
+		o1 = new Order();
+		o1.addToOrder(p1, 5);
+		testOMS.placeOrder(o1);
+		System.out.println("o1 placed r2");
+
+		testOMS.setDefaultProductStockLevel(p1,3);
+
+		o1 = new Order();
+		o1.addToOrder(p1, 5);
+		testOMS.placeOrder(o1);
+		System.out.println("o1 placed r3");
+
+
+	}
+
+
 }
