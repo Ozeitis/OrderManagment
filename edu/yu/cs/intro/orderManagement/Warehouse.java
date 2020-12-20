@@ -37,12 +37,9 @@ public class Warehouse {
 		int csl = currentStockLevel.get(idMap.get(productNumber));
 		if (csl < minimum) {
 			//potential fix
-			System.out.println("Ideal of p1 (should be 1): " + this.idealStockLevel.get(idMap.get(productNumber)));
-			if(minimum < this.idealStockLevel.get(this.idMap.get(productNumber))){
-				currentStockLevel.put(idMap.get(productNumber), minimum);
-			}else{
-				currentStockLevel.put(idMap.get(productNumber), this.idealStockLevel.get(this.idMap.get(productNumber)));
-			}
+			System.out.println("Ideal of p1: " + this.idealStockLevel.get(idMap.get(productNumber)));
+
+			this.currentStockLevel.put(idMap.get(productNumber), minimum);
 			
 		
 		}
