@@ -212,4 +212,4 @@ public class OrderManagementSystem {
 		this.warehouse.setDefaultStockLevel(prod.getItemNumber(), level);
 		System.out.println("New stock of p1 (shouldn't change): " + warehouse.getStockLevel(1));
 	}
-}	
+}
