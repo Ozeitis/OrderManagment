@@ -123,6 +123,11 @@ public class OrderManagementSystem {
 	}
 
 	protected int validateServices(Collection<Service> services, Order order) {
+		//As soon as an order needs a service provider, the service provider is added to this set. 
+		//We then check if the service provider has already been used in this order.
+		//Have to do this all here bc Judah's test code compares a set of services to the services in the order, without ever initializing
+		//an ordermanagementsystem, and therefore, we cant just rely on the serviceProviderUses map.
+		Set<ServiceProvider> usedUp = new HashSet<>();
 		for (Service service : services) {
 			if (!this.allServices.contains(service)) {
 				return service.getItemNumber();
@@ -141,8 +146,9 @@ public class OrderManagementSystem {
 			int counter = 0;
 			for (ServiceProvider server : serviceProviders) {
 				int y = this.serviceProviderUses.getOrDefault(server, -1);
-				if (y == -1) {
+				if (y == -1 && !usedUp.contains(server)) { //see explanation above
 					counter++;
+					usedUp.add(server);//see explanation above
 				}
 			}
 			// If we don't have enough service providers, we can't fulfill the service
