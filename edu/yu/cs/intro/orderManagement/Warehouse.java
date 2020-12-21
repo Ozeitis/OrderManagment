@@ -37,8 +37,21 @@ public class Warehouse {
 		}
 		int csl = currentStockLevel.get(idMap.get(productNumber));
 		if (csl < minimum) {
-			System.out.println("Ideal of p1: " + this.idealStockLevel.get(idMap.get(productNumber)));
-			this.currentStockLevel.put(idMap.get(productNumber), minimum);
+			//Need to have this double check
+			if(minimum > idealStockLevel.get(idMap.get(productNumber)){
+				this.currentStockLevel.put(idMap.get(productNumber), minimum);
+			}else{
+				this.currentStockLevel.put(idMap.get(productNumber), idealStockLevel.get(idMap.get(productNumber));
+			}
+			
+			
+			
+			
+			
+			
+			//This was the old code. Not deleting, just commenting out
+			//System.out.println("Ideal of p1: " + this.idealStockLevel.get(idMap.get(productNumber)));
+			//this.currentStockLevel.put(idMap.get(productNumber), minimum);
 		}
 	}
 
