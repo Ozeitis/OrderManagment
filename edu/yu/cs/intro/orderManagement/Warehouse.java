@@ -1,4 +1,5 @@
 package edu.yu.cs.intro.orderManagement;
+
 import java.util.Set;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,7 +22,7 @@ public class Warehouse {
 	}
 
 	protected void addNewProductToWarehouse(Product product, int desiredStockLevel) {
-		if (currentStockLevel.containsKey(product)) {
+		if (isInCatalog(product.getItemNumber()) || (!isRestockable(product.getItemNumber()))) {
 			throw new IllegalArgumentException();
 		} else {
 			currentStockLevel.put(product, desiredStockLevel);
@@ -36,22 +37,18 @@ public class Warehouse {
 		}
 		int csl = currentStockLevel.get(idMap.get(productNumber));
 		if (csl < minimum) {
-			//potential fix
 			System.out.println("Ideal of p1: " + this.idealStockLevel.get(idMap.get(productNumber)));
-
 			this.currentStockLevel.put(idMap.get(productNumber), minimum);
-			
-		
 		}
 	}
 
 	protected int setDefaultStockLevel(int productNumber, int quantity) {
-		int oldStock = this.idealStockLevel.get(idMap.get(productNumber));//currentStockLevel.get(idMap.get(productNumber)
+		int oldStock = this.idealStockLevel.get(idMap.get(productNumber));// currentStockLevel.get(idMap.get(productNumber)
 		if (doNotStock.contains(idMap.get(productNumber)) || isInCatalog(productNumber) == false) {
 			throw new IllegalArgumentException();
 		} else {
 			System.out.println("OG ideal stock: " + oldStock);
-			this.idealStockLevel.put(idMap.get(productNumber), quantity);//currentStockLevel.get(idMap.get(productNumber)
+			this.idealStockLevel.put(idMap.get(productNumber), quantity);// currentStockLevel.get(idMap.get(productNumber)
 			System.out.println("The new ideal stock of p1: " + this.idealStockLevel.get(idMap.get(productNumber)));
 		}
 		return oldStock; // correct? It wants the old stock?
@@ -97,9 +94,9 @@ public class Warehouse {
 			throw new IllegalArgumentException();
 		}
 		currentStockLevel.put(idMap.get(productNumber), currentStockLevel.get(idMap.get(productNumber)) - quantity);
-		//potential bug fix
-		for(Product prdct : this.currentStockLevel.keySet()){
-			if(this.currentStockLevel.get(prdct) == 0 && isRestockable(prdct.getItemNumber())){
+		// potential bug fix
+		for (Product prdct : this.currentStockLevel.keySet()) {
+			if (this.currentStockLevel.get(prdct) == 0 && isRestockable(prdct.getItemNumber())) {
 				restock(prdct.getItemNumber(), this.idealStockLevel.get(prdct));
 			}
 		}
