@@ -159,7 +159,8 @@ public class OrderManagementSystem {
 				return prod.getItemNumber();
 			}
 			int qOrdered = order.getQuantity(prod);
-			if (qOrdered > this.warehouse.getStockLevel(prod.getItemNumber())) {
+			if (qOrdered > this.warehouse.getStockLevel(prod.getItemNumber())
+					&& (!warehouse.isRestockable(prod.getItemNumber()))) {
 				return prod.getItemNumber();
 			}
 		}
