@@ -1,5 +1,4 @@
 package edu.yu.cs.intro.orderManagement;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,22 +14,20 @@ import java.util.Set;
 
 //use get or default
 /**
- * Takes orders, manages the warehouse as well as service providers
- */
+* Takes orders, manages the warehouse as well as service providers
+*/
 public class OrderManagementSystem {
 	private Warehouse warehouse;
 	private Set<Service> allServices;
 	private Map<Service, List<ServiceProvider>> serveToServer;
 	private Map<ServiceProvider, Integer> serviceProviderUses;
 	private int defaultProductStockLevel;
-
-	public OrderManagementSystem(Set<Product> products, int defaultProductStockLevel,
-			Set<ServiceProvider> serviceProviders) {
+	
+	public OrderManagementSystem(Set<Product> products, int defaultProductStockLevel, Set<ServiceProvider> serviceProviders) {
 		this(products, defaultProductStockLevel, serviceProviders, new Warehouse());
 	}
 
-	public OrderManagementSystem(Set<Product> products, int defaultProductStockLevel,
-			Set<ServiceProvider> serviceProviders, Warehouse warehouse) {
+	public OrderManagementSystem(Set<Product> products, int defaultProductStockLevel, Set<ServiceProvider> serviceProviders, Warehouse warehouse) {
 		this.defaultProductStockLevel = defaultProductStockLevel;
 		this.serviceProviderUses = new HashMap<>();
 		this.warehouse = warehouse;
@@ -40,7 +37,7 @@ public class OrderManagementSystem {
 
 		this.allServices = new HashSet<Service>();
 		for (ServiceProvider servPro : serviceProviders) {
-			this.allServices.addAll(servPro.getServices());
+		this.allServices.addAll(servPro.getServices());
 
 		}
 		// The key will be a service and the value will be all the serviceproviders that
@@ -56,9 +53,9 @@ public class OrderManagementSystem {
 				Set<Service> services = servePro.getServices();
 				// going through the set of services provided by this specific serviceprovider
 				for (Service serv : services) {
-					// if any of the services offered by this service provider equals the service we
-					// are checking for,
-					// then the specific serviceprovider is added to the list of service providers
+				// if any of the services offered by this service provider equals the service we
+				// are checking for,
+				// then the specific serviceprovider is added to the list of service providers
 					if (serv.equals(bigServ)) {
 						serveProList.add(servePro);
 					}
@@ -72,6 +69,7 @@ public class OrderManagementSystem {
 		if (validateServices(order.getServicesList(), order) != 0) {
 			throw new IllegalStateException();
 		}
+		
 
 		Set<ServiceProvider> providersInThisOrder = new HashSet<>();
 		for (Item i : order.getItems()) {// ADD ALL CODE TO VALIDATE SERVICE
@@ -91,10 +89,9 @@ public class OrderManagementSystem {
 					}
 				}
 			} else { // IF PRODUCT DO BELOW
-				// test
+				//test
 				System.out.println("Starting stock of " + i.getDescription() + ": " + warehouse.getStockLevel(1));
-				if (!this.warehouse.isRestockable(i.getItemNumber())
-						&& this.warehouse.getStockLevel(i.getItemNumber()) == 0) {
+				if (!this.warehouse.isRestockable(i.getItemNumber()) && this.warehouse.getStockLevel(i.getItemNumber()) == 0) {
 					throw new IllegalArgumentException();
 				}
 				if (validateProducts(order.getProductsList(), order) == 0) {
@@ -106,7 +103,7 @@ public class OrderManagementSystem {
 			}
 		}
 
-		// testing stock
+		//testing stock
 		System.out.println("New stock of p1: " + warehouse.getStockLevel(1));
 
 		// PLACE ORDER
@@ -121,6 +118,7 @@ public class OrderManagementSystem {
 			}
 		}
 	}
+
 
 	protected int validateServices(Collection<Service> services, Order order) {
 		//As soon as an order needs a service provider, the service provider is added to this set. 
@@ -161,9 +159,6 @@ public class OrderManagementSystem {
 
 	protected int validateProducts(Collection<Product> products, Order order) {
 		for (Product prod : products) {
-			if (!warehouse.isInCatalog(prod.getItemNumber())) {
-				return prod.getItemNumber();
-			}
 			int qOrdered = order.getQuantity(prod);
 			if (qOrdered > this.warehouse.getStockLevel(prod.getItemNumber())
 					&& (!warehouse.isRestockable(prod.getItemNumber()))) {
