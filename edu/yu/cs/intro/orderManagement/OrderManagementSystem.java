@@ -154,8 +154,7 @@ public class OrderManagementSystem {
 	protected int validateProducts(Collection<Product> products, Order order) {
 		for (Product prod : products) {
 			int qOrdered = order.getQuantity(prod);
-			if (qOrdered > this.warehouse.getStockLevel(prod.getItemNumber())
-					&& (!warehouse.isRestockable(prod.getItemNumber()))) {
+			if (qOrdered > this.warehouse.getStockLevel(prod.getItemNumber())) {
 				return prod.getItemNumber();
 			}
 		}
