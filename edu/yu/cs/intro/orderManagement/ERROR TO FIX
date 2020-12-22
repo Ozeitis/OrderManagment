@@ -1,6 +1,6 @@
 YOUR SCORE: 300 out of 360
 
-TEST NAME: testAddGetCatalog
+TEST NAME: testAddGetCatalog  -------- FIXED NOT TESTED - HEAVY TEST THIS - DO WE NEED continue, what if we leave blank?
 TEST DESCRIPTION: OrderManagementSystem: Check that adding products to the catalog, and retrieving them, all work properly
 TEST POINT VALUE: 12
 null
@@ -24,7 +24,7 @@ java.lang.IllegalArgumentException
 
 
 
-TEST NAME: unsuccessfulValidateServicesNotEnoughProviders
+TEST NAME: unsuccessfulValidateServicesNotEnoughProviders -------- FIXED NOT TESTED
 TEST DESCRIPTION: OrderManagementSystem: call validateServices in a situation in which it should find we don't have enough providers for a given service
 TEST POINT VALUE: 12
 validateServices should've returned 6 or 2, but returned 0

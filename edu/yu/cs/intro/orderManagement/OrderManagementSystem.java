@@ -62,7 +62,11 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
 		this.serviceProviderUses = new HashMap<>();
 		this.warehouse = warehouse;
 		for (Product p : products) {
-			this.warehouse.addNewProductToWarehouse(p, defaultProductStockLevel);
+			try {
+				this.warehouse.addNewProductToWarehouse(p, defaultProductStockLevel);
+			} catch (IllegalArgumentException e) {
+				continue;
+			}
 		}
 
 		this.allServices = new HashSet<Service>();
@@ -154,8 +158,6 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
 					throw new IllegalArgumentException();
 				}
 				if (validateProducts(order.getProductsList(), order) == 0) {
-					this.warehouse.fulfill(i.getItemNumber(), order.getQuantity(i));
-				} else {
 					this.warehouse.restock(i.getItemNumber(), order.getQuantity(i));
 					this.warehouse.fulfill(i.getItemNumber(), order.getQuantity(i));
 				}
