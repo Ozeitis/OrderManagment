@@ -44,15 +44,16 @@ public class Demo {
                 Set<Service> services = system.getOfferedServices();
                 assert this.allServices.size() == services.size();
                 assert services.containsAll(this.allServices);
-
                 // create an order
                 Order order = new Order();
-                order.addToOrder(this.idToProduct.get(1), 2); // will use out of 5 of product #1
+                order.addToOrder(this.idToProduct.get(1), 3); // will use out of 5 of product #1
                 order.addToOrder(this.idToService.get(6), 1); // will use the only service provider for #6
                 system.placeOrder(order);
-                assert this.warehouse.getStockLevel(1) == 3;
+                assert this.warehouse.getStockLevel(1) == 2;
                 assert order.isCompleted();
-                order = new Order(); // place another order, should throw IllegalStateException
+                // place another order, should throw IllegalStateException
+
+                order = new Order();
                 order.addToOrder(this.idToService.get(6), 1); // provider for #6 not available - should throw exception
                 boolean caught = false;
                 try {
@@ -112,6 +113,7 @@ public class Demo {
                 for (Product p : this.products) {
                         this.idToProduct.put(p.getItemNumber(), p);
                 }
+
         }
 
         private void createDemoServiceProviders() {
@@ -134,7 +136,6 @@ public class Demo {
                 }
                 this.providers.add(new ServiceProvider("p1", 1, srvcSetAll));
                 Set<Service> srvcSetThree = new HashSet<>();
-
                 srvcSetAll.add(s1);
                 srvcSetAll.add(s2);
                 srvcSetAll.add(s3);
