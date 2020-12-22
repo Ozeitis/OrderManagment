@@ -1,0 +1,106 @@
+YOUR SCORE: 300 out of 360
+
+TEST NAME: testAddGetCatalog
+TEST DESCRIPTION: OrderManagementSystem: Check that adding products to the catalog, and retrieving them, all work properly
+TEST POINT VALUE: 12
+null
+java.lang.IllegalArgumentException
+	at edu.yu.cs.intro.orderManagement.Warehouse.addNewProductToWarehouse(Warehouse.java:47)
+	at edu.yu.cs.intro.orderManagement.OrderManagementSystem.addNewProducts(OrderManagementSystem.java:255)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.catalogMatchesExpectedSet(Assignment8Tests.java:632)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.testAddGetCatalog(Assignment8Tests.java:625)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at edu.yu.cs.intro.TestHelper.runMethod(TestHelper.java:194)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.runTest(Assignment8Tests.java:70)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.runTest(Assignment8Tests.java:61)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.runTests(Assignment8Tests.java:82)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.main(Assignment8Tests.java:34)
++++++TEST FAILED+++++
+
+
+
+
+
+TEST NAME: unsuccessfulValidateServicesNotEnoughProviders
+TEST DESCRIPTION: OrderManagementSystem: call validateServices in a situation in which it should find we don't have enough providers for a given service
+TEST POINT VALUE: 12
+validateServices should've returned 6 or 2, but returned 0
+edu.yu.cs.intro.orderManagement.Assignment8Tests$IncorrectBehaviorException: validateServices should've returned 6 or 2, but returned 0
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.unsuccessfulValidateServicesNotEnoughProviders(Assignment8Tests.java:531)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at edu.yu.cs.intro.TestHelper.runMethod(TestHelper.java:194)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.runTest(Assignment8Tests.java:70)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.runTest(Assignment8Tests.java:61)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.runTests(Assignment8Tests.java:90)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.main(Assignment8Tests.java:34)
++++++TEST FAILED+++++
+
+
+
+
+
+TEST NAME: successfulValidateProducts
+TEST DESCRIPTION: OrderManagementSystem: call validateProducts in a situation in which it should return 0.
+TEST POINT VALUE: 12
+validateProducts should've returned 0, but returned 1
+edu.yu.cs.intro.orderManagement.Assignment8Tests$IncorrectBehaviorException: validateProducts should've returned 0, but returned 1
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.successfulValidateProducts(Assignment8Tests.java:477)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at edu.yu.cs.intro.TestHelper.runMethod(TestHelper.java:194)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.runTest(Assignment8Tests.java:70)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.runTest(Assignment8Tests.java:61)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.runTests(Assignment8Tests.java:92)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.main(Assignment8Tests.java:34)
++++++TEST FAILED+++++
+
+
+
+
+
+
+TEST NAME: restockToLowerAndGetStockLevel
+TEST DESCRIPTION: Warehouse: make sure calling warehouse.setDefaultStockLevel with level < current level doesn't decrease the level without orders being placed
+TEST POINT VALUE: 12
+Stock level of product 1 was initially 5, then set to 1 using warehouse.setDefaultStockLevel, but warehouse.getStockLevel returned 1
+edu.yu.cs.intro.orderManagement.Assignment8Tests$IncorrectBehaviorException: Stock level of product 1 was initially 5, then set to 1 using warehouse.setDefaultStockLevel, but warehouse.getStockLevel returned 1
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.restockToLowerAndGetStockLevel(Assignment8Tests.java:397)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at edu.yu.cs.intro.TestHelper.runMethod(TestHelper.java:194)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.runTest(Assignment8Tests.java:70)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.runTest(Assignment8Tests.java:61)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.runTests(Assignment8Tests.java:100)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.main(Assignment8Tests.java:34)
++++++TEST FAILED+++++
+
+
+
+
+
+TEST NAME: runDownStockViaOrdersRestoreToDefaultLevel
+TEST DESCRIPTION: Warehouse: placing orders that lower stock level to zero should cause stock level to rise to whatever the default stock level is for the given item
+TEST POINT VALUE: 12
+Stock level of product 2 was initially 5, 4 were ordered and then 1 was ordered, warehouse.getStockLevel should now return 5, but it returned 1
+edu.yu.cs.intro.orderManagement.Assignment8Tests$IncorrectBehaviorException: Stock level of product 2 was initially 5, 4 were ordered and then 1 was ordered, warehouse.getStockLevel should now return 5, but it returned 1
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.runDownStockViaOrdersRestoreToDefaultLevel(Assignment8Tests.java:354)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at edu.yu.cs.intro.TestHelper.runMethod(TestHelper.java:194)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.runTest(Assignment8Tests.java:70)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.runTest(Assignment8Tests.java:61)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.runTests(Assignment8Tests.java:102)
+	at edu.yu.cs.intro.orderManagement.Assignment8Tests.main(Assignment8Tests.java:34)
++++++TEST FAILED+++++
