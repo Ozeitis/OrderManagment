@@ -45,7 +45,7 @@ edu.yu.cs.intro.orderManagement.Assignment8Tests$IncorrectBehaviorException: val
 
 
 
-TEST NAME: successfulValidateProducts
+TEST NAME: successfulValidateProducts -------- FIXED NOT TESTED
 TEST DESCRIPTION: OrderManagementSystem: call validateProducts in a situation in which it should return 0.
 TEST POINT VALUE: 12
 validateProducts should've returned 0, but returned 1
@@ -67,7 +67,7 @@ edu.yu.cs.intro.orderManagement.Assignment8Tests$IncorrectBehaviorException: val
 
 
 
-TEST NAME: restockToLowerAndGetStockLevel
+TEST NAME: restockToLowerAndGetStockLevel -------- FIXED NOT TESTED
 TEST DESCRIPTION: Warehouse: make sure calling warehouse.setDefaultStockLevel with level < current level doesn't decrease the level without orders being placed
 TEST POINT VALUE: 12
 Stock level of product 1 was initially 5, then set to 1 using warehouse.setDefaultStockLevel, but warehouse.getStockLevel returned 1
@@ -88,7 +88,7 @@ edu.yu.cs.intro.orderManagement.Assignment8Tests$IncorrectBehaviorException: Sto
 
 
 
-TEST NAME: runDownStockViaOrdersRestoreToDefaultLevel
+TEST NAME: runDownStockViaOrdersRestoreToDefaultLevel -------- FIXED NOT TESTED
 TEST DESCRIPTION: Warehouse: placing orders that lower stock level to zero should cause stock level to rise to whatever the default stock level is for the given item
 TEST POINT VALUE: 12
 Stock level of product 2 was initially 5, 4 were ordered and then 1 was ordered, warehouse.getStockLevel should now return 5, but it returned 1

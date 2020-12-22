@@ -90,7 +90,7 @@ public class Warehouse {
 		if (doNotStock.contains(idMap.get(productNumber)) || isInCatalog(productNumber) == false) {
 			throw new IllegalArgumentException();
 		} else {
-			currentStockLevel.put(idMap.get(productNumber), quantity);
+			idealStockLevel.put(idMap.get(productNumber), quantity);
 		}
 		return oldStock; // correct? It wants the old stock?
 	}

@@ -230,7 +230,8 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
 	protected int validateProducts(Collection<Product> products, Order order) {
 		for (Product prod : products) {
 			int qOrdered = order.getQuantity(prod);
-			if (qOrdered > this.warehouse.getStockLevel(prod.getItemNumber())) {
+			if (qOrdered > this.warehouse.getStockLevel(prod.getItemNumber())
+					&& !warehouse.isRestockable(prod.getItemNumber())) {
 				return prod.getItemNumber();
 			}
 		}
@@ -332,96 +333,3 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
 	}
 
 }
-
-
-	
-	
-
-	
-	
-		
-			
-			
-				
-				
-			
-		
-	
-	
-
-	
-
-	
-
-	
-
-	
-	 
-	 
-	 
-	 
-	
-		
-		
-		
-		
-			
-				
-				
-				
-			
-				
-				
-				
-			
-		
-	
-
-	
-	 
-	  
-	 
-	 
-	
-		
-	
-
-	
-	 
-	 
-	
-		
-	
-
-	
-	 
-	 
-	 
-	 
-	  
-	 
-	 
-	
-		
-			
-		
-			
-		
-	
-
-	
-	 
-	  
-	 
-	 
-	
-		
-	
-
-	
-		
-		
-			
-		
-		
-	
