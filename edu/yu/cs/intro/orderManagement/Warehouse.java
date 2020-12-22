@@ -68,7 +68,10 @@ public class Warehouse {
           // int isl = idealStockLevel.get(idMap.get(productNumber));
           int csl = currentStockLevel.get(idMap.get(productNumber));
           if (csl < minimum) {
-               currentStockLevel.put(idMap.get(productNumber), minimum);
+               if(minimum > idealStockLevel.get(idMap.get(productNumber)){
+                    currentStockLevel.put(idMap.get(productNumber), minimum);
+               }else{
+                    currentStockLevel.put(idMap.get(productNumber), idealStockLevel.get(idMap.get(productNumber));
           }
      }
 
