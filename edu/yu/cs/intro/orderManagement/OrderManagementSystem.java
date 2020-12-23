@@ -264,7 +264,11 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
 		Set<Product> newProducts = new HashSet<>();
 
 		for (Product product : products) {
+			try{
 			this.warehouse.addNewProductToWarehouse(product, this.defaultProductStockLevel);
+			}catch(IllegalArgumentException e){
+				continue;
+			}
 			if (!warehouseProducts.contains(product)) {
 				newProducts.add(product);
 			}
