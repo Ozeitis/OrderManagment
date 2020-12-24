@@ -215,7 +215,7 @@ public class OrderManagementSystem { // Version / Date: 1.1 / December 10, 2020
 			int counter = 0;
 			for (ServiceProvider server : serviceProviders) {
 				int y = this.serviceProviderUses.getOrDefault(server, -1);
-				if (y == -1 && !usedUp.contains(server) && counter < y) { // see explanation above
+				if (y == -1 && !usedUp.contains(server) && counter < x) { // see explanation above
 					counter++;
 					usedUp.add(server);// see explanation above
 				}
