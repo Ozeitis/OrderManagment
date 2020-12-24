@@ -114,6 +114,7 @@ public class Warehouse {
 	 */
 	protected boolean isInCatalog(int itemNumber) {
 		return idMap.containsKey(itemNumber);
+
 	}
 
 	/**
