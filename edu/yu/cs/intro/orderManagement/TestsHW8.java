@@ -315,7 +315,6 @@ public class TestsHW8 {
 		Service srvc1 = new Service(15, 2, 1, "srvc1");
 		Service srvc2 = new Service(10, 1, 2, "srvc2");
 		Service srvc6 = new Service(15, 2, 1, "srvc1");
-		;
 		order.addToOrder(srvc1, 2);
 		order.addToOrder(srvc2, 2);
 		order.addToOrder(srvc6, 1);
